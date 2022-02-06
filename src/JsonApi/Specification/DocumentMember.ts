@@ -5,14 +5,14 @@ export { TypeGuards }
 /**
  * JSON:API "meta object" that includes non-standard meta-information.
  * @see {@link https://jsonapi.org/format/#document-meta}
- * @see {isMetaObject} ts-auto-guard:type-guard
+ * @see {@link isMetaObject} ts-auto-guard:type-guard
  */
 export type MetaObject = { [key: string]: any }
 
 /**
  * JSON:API "jsonapi object" that includes information about its implementation.
  * @see {@link https://jsonapi.org/format/#document-jsonapi-object}
- * @see {isJsonApiObject} ts-auto-guard:type-guard
+ * @see {@link isJsonApiObject} ts-auto-guard:type-guard
  */
 export type JsonApiObject = {
   version?: string
@@ -22,7 +22,7 @@ export type JsonApiObject = {
 /**
  * JSON:API "resource identifier object" that identifies an individual resource.
  * @see {@link https://jsonapi.org/format/#document-resource-identifier-objects}
- * @see {isResourceIdentifierObject} ts-auto-guard:type-guard
+ * @see {@link isResourceIdentifierObject} ts-auto-guard:type-guard
  */
 export type ResourceIdentifierObject = {
   type: string
@@ -33,7 +33,7 @@ export type ResourceIdentifierObject = {
 /**
  * JSON:API "link object" that represents a link.
  * @see {@link https://jsonapi.org/format/#document-links}
- * @see {isLinkObject} ts-auto-guard:type-guard
+ * @see {@link isLinkObject} ts-auto-guard:type-guard
  */
 export type LinkObject = {
   href?: string
@@ -43,14 +43,14 @@ export type LinkObject = {
 /**
  * JSON:API "link" that represents a link.
  * @see {@link https://jsonapi.org/format/#document-links}
- * @see {isLink} ts-auto-guard:type-guard
+ * @see {@link isLink} ts-auto-guard:type-guard
  */
 export type Link = string | LinkObject
 
 /**
  * JSON:API "links object" that represents links.
  * @see {@link https://jsonapi.org/format/#document-links}
- * @see {isLinksObject} ts-auto-guard:type-guard
+ * @see {@link isLinksObject} ts-auto-guard:type-guard
  */
 export type LinksObject = {
   [key: string]: Link
@@ -59,7 +59,7 @@ export type LinksObject = {
 /**
  * JSON:API "pagination links" that represents links to traverse a paginated data set.
  * @see {@link https://jsonapi.org/format/#document-links}
- * @see {isPaginationLinks} ts-auto-guard:type-guard
+ * @see {@link isPaginationLinks} ts-auto-guard:type-guard
  */
 export type PaginationLinks = {
   first?: Link | null
@@ -73,7 +73,7 @@ export type PaginationLinks = {
  * It MUST NOT contains a "relationships" or "links" member.
  * It SHOULD NOT contains has-one foreign keys (e.g. author_id).
  * @see {@link https://jsonapi.org/format/#document-resource-object-attributes}
- * @see {isAttributesObject} ts-auto-guard:type-guard
+ * @see {@link isAttributesObject} ts-auto-guard:type-guard
  */
 export type AttributesObject = {
   [key: string]: any
@@ -82,7 +82,7 @@ export type AttributesObject = {
 /**
  * JSON:API "relationship object" member "links".
  * @see {@link https://jsonapi.org/format/#document-resource-object-relationships}
- * @see {isRelationshipObjectLinks} ts-auto-guard:type-guard
+ * @see {@link isRelationshipObjectLinks} ts-auto-guard:type-guard
  */
 export type RelationshipObjectLinks = LinksObject & { self: Link } | LinksObject & { related: Link }
 
@@ -90,7 +90,7 @@ export type RelationshipObjectLinks = LinksObject & { self: Link } | LinksObject
  * JSON:API "relationship object" that represents a to-one relationship references from the resource object in which it’s defined to other resource object.
  * It MUST contain at least one of the following: links, data, or meta.
  * @see {@link https://jsonapi.org/format/#document-resource-object-relationships}
- * @see {isRelationshipToOneObject} ts-auto-guard:type-guard
+ * @see {@link isRelationshipToOneObject} ts-auto-guard:type-guard
  */
 export type RelationshipToOneObject = {
   links: RelationshipObjectLinks
@@ -110,7 +110,7 @@ export type RelationshipToOneObject = {
  * JSON:API "relationship object" that represents a to-many relationship references from the resource object in which it’s defined to other resource objects.
  * It MUST contain at least one of the following: links, data, or meta.
  * @see {@link https://jsonapi.org/format/#document-resource-object-relationships}
- * @see {isRelationshipToManyObject} ts-auto-guard:type-guard
+ * @see {@link isRelationshipToManyObject} ts-auto-guard:type-guard
  */
 export type RelationshipToManyObject = {
   links: RelationshipObjectLinks & PaginationLinks
@@ -129,14 +129,14 @@ export type RelationshipToManyObject = {
 /**
  * JSON:API "relationship object" that represents references from the resource object in which it’s defined to other resource objects.
  * @see {@link https://jsonapi.org/format/#document-resource-object-relationships}
- * @see {isRelationshipObject} ts-auto-guard:type-guard
+ * @see {@link isRelationshipObject} ts-auto-guard:type-guard
  */
 export type RelationshipObject = RelationshipToOneObject | RelationshipToManyObject
 
 /**
  * JSON:API "relationships object".
  * @see {@link https://jsonapi.org/format/#document-resource-object-relationships}
- * @see {isRelationshipsObject} ts-auto-guard:type-guard
+ * @see {@link isRelationshipsObject} ts-auto-guard:type-guard
  */
 export type RelationshipsObject = {
   [key: string]: RelationshipObject
@@ -145,7 +145,7 @@ export type RelationshipsObject = {
 /**
  * JSON:API "resource object" that represents a resource.
  * @see {@link https://jsonapi.org/format/#document-links}
- * @see {isResourceObject} ts-auto-guard:type-guard
+ * @see {@link isResourceObject} ts-auto-guard:type-guard
  */
 export type ResourceObject = {
   id: string
@@ -157,7 +157,7 @@ export type ResourceObject = {
 /**
  * JSON:API "error object" that provides additional information about problems encountered while performing an operation.
  * @see {@link https://jsonapi.org/format/#error-objects}
- * @see {isErrorObject} ts-auto-guard:type-guard
+ * @see {@link isErrorObject} ts-auto-guard:type-guard
  */
 export type ErrorObject = {
   id?: any
