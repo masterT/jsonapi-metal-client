@@ -97,16 +97,16 @@ export function isAttributesObject(obj: any, _argumentName?: string): obj is Att
 
 export function isRelationshipObjectLinks(obj: any, _argumentName?: string): obj is RelationshipObjectLinks {
     return (
-        ((isLinksObject(obj) as boolean ||
+        (isLinksObject(obj) as boolean &&
             (obj !== null &&
                 typeof obj === "object" ||
                 typeof obj === "function") &&
-            isLink(obj.self) as boolean) ||
-            (isLinksObject(obj) as boolean ||
-                (obj !== null &&
-                    typeof obj === "object" ||
-                    typeof obj === "function") &&
-                isLink(obj.related) as boolean))
+            isLink(obj.self) as boolean ||
+            isLinksObject(obj) as boolean &&
+            (obj !== null &&
+                typeof obj === "object" ||
+                typeof obj === "function") &&
+            isLink(obj.related) as boolean)
     )
 }
 
@@ -125,16 +125,16 @@ export function isRelationshipToOneObject(obj: any, _argumentName?: string): obj
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean) &&
             (obj.data === null ||
                 isResourceIdentifierObject(obj.data) as boolean) &&
             (typeof obj.meta === "undefined" ||
@@ -143,16 +143,16 @@ export function isRelationshipToOneObject(obj: any, _argumentName?: string): obj
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean) &&
             (typeof obj.data === "undefined" ||
                 obj.data === null ||
                 isResourceIdentifierObject(obj.data) as boolean) &&
@@ -165,18 +165,18 @@ export function isRelationshipToManyObject(obj: any, _argumentName?: string): ob
         ((obj !== null &&
             typeof obj === "object" ||
             typeof obj === "function") &&
-            ((isLinksObject(obj.links) as boolean ||
+            (isLinksObject(obj.links) as boolean &&
                 (obj.links !== null &&
                     typeof obj.links === "object" ||
                     typeof obj.links === "function") &&
-                isLink(obj.links.self) as boolean ||
-                isPaginationLinks(obj.links) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean ||
-                    isPaginationLinks(obj.links) as boolean)) &&
+                isLink(obj.links.self) as boolean &&
+                isPaginationLinks(obj.links) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean &&
+                isPaginationLinks(obj.links) as boolean) &&
             (typeof obj.data === "undefined" ||
                 Array.isArray(obj.data) &&
                 obj.data.every((e: any) =>
@@ -188,18 +188,18 @@ export function isRelationshipToManyObject(obj: any, _argumentName?: string): ob
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean ||
-                    isPaginationLinks(obj.links) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean ||
-                    isPaginationLinks(obj.links) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean &&
+                isPaginationLinks(obj.links) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean &&
+                isPaginationLinks(obj.links) as boolean) &&
             Array.isArray(obj.data) &&
             obj.data.every((e: any) =>
                 isResourceIdentifierObject(e) as boolean
@@ -210,18 +210,18 @@ export function isRelationshipToManyObject(obj: any, _argumentName?: string): ob
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean ||
-                    isPaginationLinks(obj.links) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean ||
-                    isPaginationLinks(obj.links) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean &&
+                isPaginationLinks(obj.links) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean &&
+                isPaginationLinks(obj.links) as boolean) &&
             (typeof obj.data === "undefined" ||
                 Array.isArray(obj.data) &&
                 obj.data.every((e: any) =>
@@ -246,16 +246,16 @@ export function isRelationshipObject(obj: any, _argumentName?: string): obj is R
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean) &&
             (obj.data === null ||
                 isResourceIdentifierObject(obj.data) as boolean) &&
             (typeof obj.meta === "undefined" ||
@@ -264,16 +264,16 @@ export function isRelationshipObject(obj: any, _argumentName?: string): obj is R
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean) &&
             (typeof obj.data === "undefined" ||
                 obj.data === null ||
                 isResourceIdentifierObject(obj.data) as boolean) &&
@@ -281,18 +281,18 @@ export function isRelationshipObject(obj: any, _argumentName?: string): obj is R
             (obj !== null &&
                 typeof obj === "object" ||
                 typeof obj === "function") &&
-            ((isLinksObject(obj.links) as boolean ||
+            (isLinksObject(obj.links) as boolean &&
                 (obj.links !== null &&
                     typeof obj.links === "object" ||
                     typeof obj.links === "function") &&
-                isLink(obj.links.self) as boolean ||
-                isPaginationLinks(obj.links) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean ||
-                    isPaginationLinks(obj.links) as boolean)) &&
+                isLink(obj.links.self) as boolean &&
+                isPaginationLinks(obj.links) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean &&
+                isPaginationLinks(obj.links) as boolean) &&
             (typeof obj.data === "undefined" ||
                 Array.isArray(obj.data) &&
                 obj.data.every((e: any) =>
@@ -304,18 +304,18 @@ export function isRelationshipObject(obj: any, _argumentName?: string): obj is R
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean ||
-                    isPaginationLinks(obj.links) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean ||
-                    isPaginationLinks(obj.links) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean &&
+                isPaginationLinks(obj.links) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean &&
+                isPaginationLinks(obj.links) as boolean) &&
             Array.isArray(obj.data) &&
             obj.data.every((e: any) =>
                 isResourceIdentifierObject(e) as boolean
@@ -326,18 +326,18 @@ export function isRelationshipObject(obj: any, _argumentName?: string): obj is R
                 typeof obj === "object" ||
                 typeof obj === "function") &&
             (typeof obj.links === "undefined" ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.self) as boolean ||
-                    isPaginationLinks(obj.links) as boolean) ||
-                (isLinksObject(obj.links) as boolean ||
-                    (obj.links !== null &&
-                        typeof obj.links === "object" ||
-                        typeof obj.links === "function") &&
-                    isLink(obj.links.related) as boolean ||
-                    isPaginationLinks(obj.links) as boolean)) &&
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.self) as boolean &&
+                isPaginationLinks(obj.links) as boolean ||
+                isLinksObject(obj.links) as boolean &&
+                (obj.links !== null &&
+                    typeof obj.links === "object" ||
+                    typeof obj.links === "function") &&
+                isLink(obj.links.related) as boolean &&
+                isPaginationLinks(obj.links) as boolean) &&
             (typeof obj.data === "undefined" ||
                 Array.isArray(obj.data) &&
                 obj.data.every((e: any) =>

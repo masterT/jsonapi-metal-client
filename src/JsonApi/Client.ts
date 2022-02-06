@@ -2,7 +2,6 @@ import * as HttpAdapter from '../HttpAdapter'
 import * as Errors from './Errors'
 import { Document } from './Specification'
 import { Result } from './Results'
-import { UpdateResourceDocumentResponse } from './Specification/Document'
 
 export class Client {
   httpAdapter: HttpAdapter.Adapter
@@ -23,11 +22,6 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @returns
-   */
   async fetchResource (url: string): Promise<Result<Document.FetchResourceResponse>> {
     return await this.requestFetchData<Document.FetchResourceResponse>(
       url,
@@ -35,11 +29,6 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @returns
-   */
   async fetchResourceIndividual (url: string): Promise<Result<Document.FetchResourceIndividualResponse>> {
     return await this.requestFetchData<Document.FetchResourceIndividualResponse>(
       url,
@@ -47,11 +36,6 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @returns
-   */
   async fetchResourceCollection (url: string): Promise<Result<Document.FetchResourceCollectionResponse>> {
     return await this.requestFetchData<Document.FetchResourceCollectionResponse>(
       url,
@@ -59,11 +43,6 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @returns
-   */
   async fetchRelationship (url: string): Promise<Result<Document.FetchRelationshipResponse>> {
     return await this.requestFetchData<Document.FetchRelationshipResponse>(
       url,
@@ -71,11 +50,6 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @returns
-   */
   async fetchRelationshipToOne (url: string): Promise<Result<Document.FetchRelationshipToOneResponse>> {
     return await this.requestFetchData<Document.FetchRelationshipToOneResponse>(
       url,
@@ -83,11 +57,6 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @returns
-   */
   async fetchRelationshipToMany (url: string): Promise<Result<Document.FetchRelationshipToManyResponse>> {
     return await this.requestFetchData<Document.FetchRelationshipToManyResponse>(
       url,
@@ -95,7 +64,7 @@ export class Client {
     )
   }
 
-   async createResource (url: string, document: Document.CreateResourceDocument): Promise<Result<Document.CreateResourceDocumentResponse>> {
+   async createResource (url: string, document: Document.CreateResourceDocument): Promise<Result<Document.CreateResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -161,13 +130,7 @@ export class Client {
     }
   }
 
-  /**
-   *
-   * @param url
-   * @param document
-   * @returns
-   */
-   async createRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyDocumentResponse>> {
+   async createRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(
       url,
       'POST',
@@ -175,13 +138,7 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @param document
-   * @returns
-   */
-  async updateResource (url: string, document: Document.UpdateResourceDocument): Promise<Result<UpdateResourceDocumentResponse>> {
+  async updateResource (url: string, document: Document.UpdateResourceDocument): Promise<Result<Document.UpdateResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -252,13 +209,7 @@ export class Client {
     }
   }
 
-  /**
-   *
-   * @param url
-   * @param document
-   * @returns
-   */
-  async updateRelationshipToOne (url: string, document: Document.UpdateRelationshipToOneDocument): Promise<Result<Document.UpdateRelationshipToOneDocumentResponse>> {
+  async updateRelationshipToOne (url: string, document: Document.UpdateRelationshipToOneDocument): Promise<Result<Document.UpdateRelationshipToOneResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -324,13 +275,7 @@ export class Client {
     }
   }
 
-  /**
-   *
-   * @param url
-   * @param document
-   * @returns
-   */
-  async updateRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyDocumentResponse>> {
+  async updateRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(
       url,
       'PATCH',
@@ -338,12 +283,7 @@ export class Client {
     )
   }
 
-  /**
-   *
-   * @param url
-   * @returns
-   */
-  async deleteResource (url: string): Promise<Result<Document.DeleteResourceDocumentResponse>> {
+  async deleteResource (url: string): Promise<Result<Document.DeleteResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -402,13 +342,7 @@ export class Client {
     }
   }
 
-  /**
-   *
-   * @param url
-   * @param document
-   * @returns
-   */
-   async deleteRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyDocumentResponse>> {
+   async deleteRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(
       url,
       'DELETE',
@@ -416,13 +350,6 @@ export class Client {
     )
   }
 
-  /**
-   * Fetch data.
-   * @param url
-   * @param typeGuard
-   * @returns
-   * @see {@link https://jsonapi.org/format/#fetching}
-   */
   private async requestFetchData<D> (url: string, typeGuard: (o: any) => o is D): Promise<Result<D>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
@@ -470,7 +397,7 @@ export class Client {
     }
   }
 
-  private async requestUpdateRelationshipToMany (url: string, method: string, document: any): Promise<Result<Document.UpdateRelationshipToManyDocumentResponse>> {
+  private async requestUpdateRelationshipToMany (url: string, method: string, document: any): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -536,12 +463,6 @@ export class Client {
     }
   }
 
-  /**
-   *
-   * @param request
-   * @param response
-   * @returns
-   */
    private parseDocumentFromResponse<Document> (
     request: HttpAdapter.Request,
     response: HttpAdapter.Response,
@@ -555,11 +476,6 @@ export class Client {
     throw new Errors.JsonApiError(request, response, 'Invalid response body')
   }
 
-  /**
-   *
-   * @param response
-   * @returns
-   */
   private parseJsonFromResponse (response: HttpAdapter.Response): any {
     if (response.body) {
       try {
@@ -572,7 +488,7 @@ export class Client {
   }
 
   /**
-   * Make HTTP request on the `httpAdapter` and ensure the response media type is valid.
+   * Make HTTP request on the {@link httpAdapter} and ensure the response media type is valid.
    * @param request
    * @returns
    */

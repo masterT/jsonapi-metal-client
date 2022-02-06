@@ -156,7 +156,7 @@ export { TypeGuards }
    meta?: MetaObject
  }
 
-export type CreateResourceDocumentResponse = FetchResourceIndividualResponse | null
+export type CreateResourceResponse = FetchResourceIndividualResponse | null
 
 
 // -------------------- Updating resource --------------------
@@ -171,12 +171,12 @@ export type CreateResourceDocumentResponse = FetchResourceIndividualResponse | n
    meta?: MetaObject
  }
 
-export type UpdateResourceDocumentResponse = FetchResourceIndividualResponse | MetaDocument | null
+export type UpdateResourceResponse = FetchResourceIndividualResponse | MetaDocument | null
 
 
 // -------------------- Delete resource --------------------
 
-export type DeleteResourceDocumentResponse = MetaDocument | null
+export type DeleteResourceResponse = MetaDocument | null
 
 
 // -------------------- Updating relationship --------------------
@@ -191,9 +191,9 @@ export type UpdateRelationshipDocument = UpdateRelationshipToOneDocument | Updat
  /**
   * JSON:API response document for updating to-one or to-many relationship.
   * @see {@link https://jsonapi.org/format/#crud-updating-relationships}
-  * @see {@link isUpdateRelationshipDocumentResponse} ts-auto-guard:type-guard
+  * @see {@link isUpdateRelationshipResponse} ts-auto-guard:type-guard
   */
-export type UpdateRelationshipDocumentResponse = UpdateRelationshipToOneDocumentResponse | UpdateRelationshipToManyDocumentResponse
+export type UpdateRelationshipResponse = UpdateRelationshipToOneResponse | UpdateRelationshipToManyResponse
 
 
 // -------------------- Updating relationship to-one --------------------
@@ -211,9 +211,9 @@ export type UpdateRelationshipDocumentResponse = UpdateRelationshipToOneDocument
  /**
   * JSON:API response document for updating to-one relationship.
   * @see {@link https://jsonapi.org/format/#crud-updating-to-one-relationships}
-  * @see {@link isUpdateRelationshipToOneDocumentResponse} ts-auto-guard:type-guard
+  * @see {@link isUpdateRelationshipToOneResponse} ts-auto-guard:type-guard
   */
- export type UpdateRelationshipToOneDocumentResponse = FetchRelationshipToOneResponse | MetaDocument | null
+ export type UpdateRelationshipToOneResponse = FetchRelationshipToOneResponse | MetaDocument | null
 
 
 // -------------------- Updating relationship to-many --------------------
@@ -231,6 +231,6 @@ export type UpdateRelationshipDocumentResponse = UpdateRelationshipToOneDocument
 /**
   * JSON:API response document for updating to-many relationship.
   * @see {@link https://jsonapi.org/format/#crud-updating-to-many-relationships}
-  * @see {@link isUpdateRelationshipToManyDocumentResponse} ts-auto-guard:type-guard
+  * @see {@link isUpdateRelationshipToManyResponse} ts-auto-guard:type-guard
   */
-export type UpdateRelationshipToManyDocumentResponse = FetchRelationshipToManyResponse | MetaDocument | null
+export type UpdateRelationshipToManyResponse = FetchRelationshipToManyResponse | MetaDocument | null

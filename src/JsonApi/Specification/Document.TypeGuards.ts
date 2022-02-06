@@ -2,7 +2,7 @@
  * Generated type guards for "Document.ts".
  * WARNING: Do not manually change this file.
  */
-import { Document, DataDocument, MetaDocument, ErrorDocument, FetchResponse, FetchResourceResponse, FetchResourceIndividualResponse, FetchResourceCollectionResponse, FetchRelationshipResponse, FetchRelationshipToOneResponse, FetchRelationshipToManyResponse, CreateResourceDocument, UpdateResourceDocument, UpdateRelationshipDocument, UpdateRelationshipDocumentResponse, UpdateRelationshipToOneDocument, UpdateRelationshipToOneDocumentResponse, UpdateRelationshipToManyDocument, UpdateRelationshipToManyDocumentResponse } from "./Document";
+import { Document, DataDocument, MetaDocument, ErrorDocument, FetchResponse, FetchResourceResponse, FetchResourceIndividualResponse, FetchResourceCollectionResponse, FetchRelationshipResponse, FetchRelationshipToOneResponse, FetchRelationshipToManyResponse, CreateResourceDocument, UpdateResourceDocument, UpdateRelationshipDocument, UpdateRelationshipResponse, UpdateRelationshipToOneDocument, UpdateRelationshipToOneResponse, UpdateRelationshipToManyDocument, UpdateRelationshipToManyResponse } from "./Document";
 import { isResourceIdentifierObject, isResourceObject, isMetaObject, isJsonApiObject, isLinksObject, isErrorObject, isAttributesObject, isRelationshipsObject } from "./DocumentMember.TypeGuards";
 
 export function isDocument(obj: any, _argumentName?: string): obj is Document {
@@ -223,7 +223,7 @@ export function isUpdateRelationshipDocument(obj: any, _argumentName?: string): 
     )
 }
 
-export function isUpdateRelationshipDocumentResponse(obj: any, _argumentName?: string): obj is UpdateRelationshipDocumentResponse {
+export function isUpdateRelationshipResponse(obj: any, _argumentName?: string): obj is UpdateRelationshipResponse {
     return (
         (obj === null ||
             isMetaDocument(obj) as boolean ||
@@ -244,7 +244,7 @@ export function isUpdateRelationshipToOneDocument(obj: any, _argumentName?: stri
     )
 }
 
-export function isUpdateRelationshipToOneDocumentResponse(obj: any, _argumentName?: string): obj is UpdateRelationshipToOneDocumentResponse {
+export function isUpdateRelationshipToOneResponse(obj: any, _argumentName?: string): obj is UpdateRelationshipToOneResponse {
     return (
         (obj === null ||
             isMetaDocument(obj) as boolean ||
@@ -266,7 +266,7 @@ export function isUpdateRelationshipToManyDocument(obj: any, _argumentName?: str
     )
 }
 
-export function isUpdateRelationshipToManyDocumentResponse(obj: any, _argumentName?: string): obj is UpdateRelationshipToManyDocumentResponse {
+export function isUpdateRelationshipToManyResponse(obj: any, _argumentName?: string): obj is UpdateRelationshipToManyResponse {
     return (
         (obj === null ||
             isMetaDocument(obj) as boolean ||
