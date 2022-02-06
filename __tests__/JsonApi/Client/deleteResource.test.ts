@@ -86,7 +86,7 @@ describe('JsonApi.Client', () => {
           test('resolves not successful result without document', async () => {
             await expect(client.deleteResource(url)).resolves.toEqual({
               isSuccess: false,
-              document: undefined,
+              document: null,
               request,
               response
             })
@@ -108,7 +108,7 @@ describe('JsonApi.Client', () => {
         test('resolves not successful result without document', async () => {
           await expect(client.deleteResource(url)).resolves.toEqual({
             isSuccess: false,
-            document: undefined,
+            document: null,
             request,
             response
           })
@@ -128,7 +128,7 @@ describe('JsonApi.Client', () => {
       test('resolves result success without document', async () => {
         await expect(client.deleteResource(url)).resolves.toEqual({
           isSuccess: true,
-          document: undefined,
+          document: null,
           request,
           response
         })
@@ -147,7 +147,7 @@ describe('JsonApi.Client', () => {
       test('resolves result success without document', async () => {
         await expect(client.deleteResource(url)).resolves.toEqual({
           isSuccess: true,
-          document: undefined,
+          document: null,
           request,
           response
         })
@@ -191,7 +191,7 @@ describe('JsonApi.Client', () => {
           test('resolves not successful result without document', async () => {
             await expect(client.deleteResource(url)).resolves.toEqual({
               isSuccess: false,
-              document: undefined,
+              document: null,
               request,
               response
             })
@@ -213,7 +213,7 @@ describe('JsonApi.Client', () => {
         test('resolves not successful result without document', async () => {
           await expect(client.deleteResource(url)).resolves.toEqual({
             isSuccess: false,
-            document: undefined,
+            document: null,
             request,
             response
           })

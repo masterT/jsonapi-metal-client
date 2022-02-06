@@ -1,44 +1,18 @@
 import * as HttpAdapter from '../HttpAdapter'
-import * as Spec from './Specification'
+import { Document } from './Specification'
 
-export type ErrorResult = {
+export type ResultFailure = {
   isSuccess: false
-  document?: Spec.ErrorDocument
+  document: Document.ErrorDocument | null
   request: HttpAdapter.Request
   response: HttpAdapter.Response
 }
 
-export type FetchResult<T> = {
+export type ResultSuccess<D> = {
   isSuccess: true
-  document: T
+  document: D
   request: HttpAdapter.Request
   response: HttpAdapter.Response
-} | ErrorResult
+}
 
-export type CreateResourceResult = {
-  isSuccess: true
-  document?: Spec.FetchResourceIndividualResponse
-  request: HttpAdapter.Request
-  response: HttpAdapter.Response
-} | ErrorResult
-
-export type UpdateResourceResult = {
-  isSuccess: true
-  document?: Spec.FetchResourceIndividualResponse | Spec.MetaDocument
-  request: HttpAdapter.Request
-  response: HttpAdapter.Response
-} | ErrorResult
-
-export type UpdateRelationshipResult<T> = {
-  isSuccess: true
-  document?: T | Spec.MetaDocument
-  request: HttpAdapter.Request
-  response: HttpAdapter.Response
-} | ErrorResult
-
-export type DeleteResourceResult = {
-  isSuccess: true
-  document?: Spec.MetaDocument
-  request: HttpAdapter.Request
-  response: HttpAdapter.Response
-} | ErrorResult
+export type Result<D> =  ResultFailure | ResultSuccess<D>

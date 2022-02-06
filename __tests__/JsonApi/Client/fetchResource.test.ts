@@ -111,7 +111,7 @@ describe('JsonApi.Client', () => {
           test('resolves not successful result without document', async () => {
             await expect(client.fetchResource(url)).resolves.toEqual({
               isSuccess: false,
-              document: undefined,
+              document: null,
               request,
               response
             })
@@ -133,7 +133,7 @@ describe('JsonApi.Client', () => {
         test('resolves not successful result without document', async () => {
           await expect(client.fetchResource(url)).resolves.toEqual({
             isSuccess: false,
-            document: undefined,
+            document: null,
             request,
             response
           })
@@ -178,7 +178,7 @@ describe('JsonApi.Client', () => {
           test('resolves not successful result without document', async () => {
             await expect(client.fetchResource(url)).resolves.toEqual({
               isSuccess: false,
-              document: undefined,
+              document: null,
               request,
               response
             })
@@ -200,7 +200,7 @@ describe('JsonApi.Client', () => {
         test('resolves not successful result without document', async () => {
           await expect(client.fetchResource(url)).resolves.toEqual({
             isSuccess: false,
-            document: undefined,
+            document: null,
             request,
             response
           })
