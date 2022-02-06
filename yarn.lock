@@ -3047,10 +3047,10 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
-ts-auto-guard@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ts-auto-guard/-/ts-auto-guard-1.0.0.tgz#3a5b60039ea45dd471324b22d714b3e295669fc5"
-  integrity sha512-LDjuDegeYj8DQywSmLVJ/yrLjOH+rpWjG+aj+yRRplDfcsLw0R+lEHyyTLV/tu+MchUAx0mhQB3AQpmyLPZMEg==
+ts-auto-guard@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ts-auto-guard/-/ts-auto-guard-2.2.1.tgz#bf0aab18636f384bfce522c9524fab85f2a8c7b9"
+  integrity sha512-Tse7+IhxuzsdyxesxOfP01BbszltcJTrovZ5Iiwv2EtlQhZuIsVoaQCbQwrqfC8N+TcEiuANjfMBb7eFuJdplw==
   dependencies:
     "@types/command-line-args" "^5.0.0"
     "@types/command-line-usage" "^5.0.1"
