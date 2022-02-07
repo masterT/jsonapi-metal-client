@@ -65,7 +65,6 @@ describe('JsonApi.Client', () => {
             url,
             headers: {
               'Accept': 'application/vnd.api+json',
-              'Content-Type': 'application/vnd.api+json',
               'x-foo': 'bar'
             },
             method: 'DELETE',
