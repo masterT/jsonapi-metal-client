@@ -1,6 +1,9 @@
 import * as HttpAdapter from '../HttpAdapter'
 import { Document } from './Specification'
 
+/**
+ * Represents a failed JSON:API operation result.
+ */
 export type ResultFailure = {
   isSuccess: false
   document: Document.ErrorDocument | null
@@ -8,6 +11,9 @@ export type ResultFailure = {
   response: HttpAdapter.Response
 }
 
+/**
+ * Represents a succeeded JSON:API operation result.
+ */
 export type ResultSuccess<D> = {
   isSuccess: true
   document: D
@@ -15,4 +21,7 @@ export type ResultSuccess<D> = {
   response: HttpAdapter.Response
 }
 
+/**
+ * Represents a JSON:API operation result.
+ */
 export type Result<D> =  ResultFailure | ResultSuccess<D>

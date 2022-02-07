@@ -5,6 +5,7 @@ import {
   JsonApiObject,
   LinksObject,
   MetaObject,
+  PaginationLinks,
   RelationshipsObject,
   ResourceIdentifierObject,
   ResourceObject
@@ -47,6 +48,17 @@ export { TypeGuards }
 
  /**
   * JSON:API "top level" with array of "error object".
+  * @example
+  *     {
+  *       "errors": [
+  *         {
+  *           "status": "422",
+  *           "source": { "pointer": "/data/attributes/firstName" },
+  *           "title":  "Invalid Attribute",
+  *           "detail": "First name must contain at least three characters."
+  *         }
+  *       ]
+  *     }
   * @see {@link https://jsonapi.org/format/#document-top-level}
   * @see {@link isErrorDocument} ts-auto-guard:type-guard
   */
@@ -78,6 +90,26 @@ export { TypeGuards }
 
  /**
   * JSON:API response document for fetching individual resource.
+  * @example
+  *     {
+  *       "links": {
+  *         "self": "http://example.com/articles/1"
+  *       },
+  *       "data": {
+  *         "type": "articles",
+  *         "id": "1",
+  *         "attributes": {
+  *           "title": "JSON:API paints my bikeshed!"
+  *         },
+  *         "relationships": {
+  *           "author": {
+  *             "links": {
+  *               "related": "http://example.com/articles/1/author"
+  *             }
+  *           }
+  *         }
+  *       }
+  *     }
   * @see {@link https://jsonapi.org/format/#fetching-resources-responses}
   * @see {@link isFetchResourceIndividualResponse} ts-auto-guard:type-guard
   */
@@ -91,6 +123,31 @@ export { TypeGuards }
 
  /**
   * JSON:API response document for fetching collection of resources.
+  * @example
+  *     {
+  *       "meta": {
+  *         "totalPages": 13
+  *       },
+  *       "data": [
+  *         {
+  *           "type": "articles",
+  *           "id": "3",
+  *           "attributes": {
+  *             "title": "JSON:API paints my bikeshed!",
+  *             "body": "The shortest article. Ever.",
+  *             "created": "2015-05-22T14:56:29.000Z",
+  *             "updated": "2015-05-22T14:56:28.000Z"
+  *           }
+  *         }
+  *       ],
+  *       "links": {
+  *         "self": "http://example.com/articles?page[number]=3&page[size]=1",
+  *         "first": "http://example.com/articles?page[number]=1&page[size]=1",
+  *         "prev": "http://example.com/articles?page[number]=2&page[size]=1",
+  *         "next": "http://example.com/articles?page[number]=4&page[size]=1",
+  *         "last": "http://example.com/articles?page[number]=13&page[size]=1"
+  *       }
+  *     }
   * @see {@link https://jsonapi.org/format/#fetching-resources-responses}
   * @see {@link isFetchResourceCollectionResponse} ts-auto-guard:type-guard
   */
@@ -99,7 +156,7 @@ export { TypeGuards }
    included?: ResourceObject[]
    meta?: MetaObject
    jsonapi?: JsonApiObject
-   links?: LinksObject
+   links?: LinksObject & PaginationLinks
  }
 
 
@@ -135,7 +192,7 @@ export { TypeGuards }
    included?: ResourceObject[]
    meta?: MetaObject
    jsonapi?: JsonApiObject
-   links?: LinksObject
+   links?: LinksObject & PaginationLinks
  }
 
 

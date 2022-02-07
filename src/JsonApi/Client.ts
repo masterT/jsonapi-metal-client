@@ -3,7 +3,14 @@ import * as Errors from './Errors'
 import { Document } from './Specification'
 import { Result } from './Results'
 
+/**
+ * JSON:API client.
+ * @see {@link https://jsonapi.org/}
+ */
 export class Client {
+  /**
+   * The HTTP adapter for making HTTP requests.
+   */
   httpAdapter: HttpAdapter.Adapter
 
   constructor (httpAdapter: HttpAdapter.Adapter) {
@@ -11,7 +18,8 @@ export class Client {
   }
 
   /**
-   *
+   * Fetch data representing individual resource, resource collection, relationship to-one or relationship to-many.
+   * @see {@link https://jsonapi.org/format/#fetching}
    * @param url
    * @returns
    */
@@ -22,6 +30,12 @@ export class Client {
     )
   }
 
+  /**
+   * Fetch an individual resource or a resource collection.
+   * @see {@link https://jsonapi.org/format/#fetching-resources}
+   * @param url
+   * @returns
+   */
   async fetchResource (url: string): Promise<Result<Document.FetchResourceResponse>> {
     return await this.requestFetchData<Document.FetchResourceResponse>(
       url,
@@ -29,6 +43,12 @@ export class Client {
     )
   }
 
+  /**
+   * Fetch an individual resource.
+   * @see {@link https://jsonapi.org/format/#fetching-resources}
+   * @param url
+   * @returns
+   */
   async fetchResourceIndividual (url: string): Promise<Result<Document.FetchResourceIndividualResponse>> {
     return await this.requestFetchData<Document.FetchResourceIndividualResponse>(
       url,
@@ -36,13 +56,26 @@ export class Client {
     )
   }
 
+  /**
+   * Fetch a resource collection.
+   * @see {@link https://jsonapi.org/format/#fetching-resources}
+   * @param url
+   * @returns
+   */
   async fetchResourceCollection (url: string): Promise<Result<Document.FetchResourceCollectionResponse>> {
     return await this.requestFetchData<Document.FetchResourceCollectionResponse>(
       url,
       Document.TypeGuards.isFetchResourceCollectionResponse
     )
   }
+  //
 
+  /**
+   * Fetch relationship data representing a to-one or to-many relationship.
+   * @see {@link https://jsonapi.org/format/#fetching-relationships}
+   * @param url
+   * @returns
+   */
   async fetchRelationship (url: string): Promise<Result<Document.FetchRelationshipResponse>> {
     return await this.requestFetchData<Document.FetchRelationshipResponse>(
       url,
@@ -50,6 +83,12 @@ export class Client {
     )
   }
 
+  /**
+   * Fetch relationship data representing a to-one relationship.
+   * @see {@link https://jsonapi.org/format/#fetching-relationships}
+   * @param url
+   * @returns
+   */
   async fetchRelationshipToOne (url: string): Promise<Result<Document.FetchRelationshipToOneResponse>> {
     return await this.requestFetchData<Document.FetchRelationshipToOneResponse>(
       url,
@@ -57,6 +96,12 @@ export class Client {
     )
   }
 
+  /**
+   * Fetch relationship data representing a to-many relationship.
+   * @see {@link https://jsonapi.org/format/#fetching-relationships}
+   * @param url
+   * @returns
+   */
   async fetchRelationshipToMany (url: string): Promise<Result<Document.FetchRelationshipToManyResponse>> {
     return await this.requestFetchData<Document.FetchRelationshipToManyResponse>(
       url,
@@ -64,7 +109,14 @@ export class Client {
     )
   }
 
-   async createResource (url: string, document: Document.CreateResourceDocument): Promise<Result<Document.CreateResourceResponse>> {
+  /**
+   * Create a resource.
+   * @see {@link https://jsonapi.org/format/#crud-creating}
+   * @param url
+   * @param document
+   * @returns
+   */
+  async createResource (url: string, document: Document.CreateResourceDocument): Promise<Result<Document.CreateResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -130,7 +182,14 @@ export class Client {
     }
   }
 
-   async createRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
+  /**
+   * Add a member to a to-many relationship.
+   * @see {@link https://jsonapi.org/format/#crud-updating-to-many-relationships}
+   * @param url
+   * @param document
+   * @returns
+   */
+  async createRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(
       url,
       'POST',
@@ -138,6 +197,13 @@ export class Client {
     )
   }
 
+  /**
+   * Update a resource.
+   * @see {@link https://jsonapi.org/format/#crud-updating}
+   * @param url
+   * @param document
+   * @returns
+   */
   async updateResource (url: string, document: Document.UpdateResourceDocument): Promise<Result<Document.UpdateResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
@@ -209,6 +275,13 @@ export class Client {
     }
   }
 
+  /**
+   * Update a to-one relationship.
+   * @see {@link https://jsonapi.org/format/#crud-updating-to-one-relationships}
+   * @param url
+   * @param document
+   * @returns
+   */
   async updateRelationshipToOne (url: string, document: Document.UpdateRelationshipToOneDocument): Promise<Result<Document.UpdateRelationshipToOneResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
@@ -275,6 +348,13 @@ export class Client {
     }
   }
 
+  /**
+   * Replace all members of a to-many relationship.
+   * @see {@link https://jsonapi.org/format/#crud-updating-to-many-relationships}
+   * @param url
+   * @param document
+   * @returns
+   */
   async updateRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(
       url,
@@ -283,6 +363,12 @@ export class Client {
     )
   }
 
+  /**
+   * Delete a resource.
+   * @see {@link https://jsonapi.org/format/#crud-deleting}
+   * @param url
+   * @returns
+   */
   async deleteResource (url: string): Promise<Result<Document.DeleteResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
@@ -342,7 +428,14 @@ export class Client {
     }
   }
 
-   async deleteRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
+  /**
+   * Remove a member from a to-many relationship.
+   * @see {@link https://jsonapi.org/format/#crud-updating-to-many-relationships}
+   * @param url
+   * @param document
+   * @returns
+   */
+  async deleteRelationshipToMany (url: string, document: Document.UpdateRelationshipToManyDocument): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(
       url,
       'DELETE',
@@ -350,6 +443,14 @@ export class Client {
     )
   }
 
+  /**
+   * Make a fetch data request and return a result including a JSON:API document of the type `D`.
+   * @see {@link https://jsonapi.org/format/#fetching}
+   * @param <D> Response JSON:API document type.
+   * @param url
+   * @param typeGuard The JSON:API document {@link https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates|type guard}.
+   * @returns
+   */
   private async requestFetchData<D> (url: string, typeGuard: (o: any) => o is D): Promise<Result<D>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
@@ -463,12 +564,19 @@ export class Client {
     }
   }
 
-   private parseDocumentFromResponse<Document> (
+  /**
+   * Parse JSON:API document from a response's body.
+   * @param <D> JSON:API document type.
+   * @param response
+   * @throws {Errors.JsonApiError} when the response's body is not a valid JSON:API document.
+   * @returns
+   */
+   private parseDocumentFromResponse<D> (
     request: HttpAdapter.Request,
     response: HttpAdapter.Response,
-    typeGuard: (o: any) => o is Document
-  ): Document {
-    const document: Document = this.parseJsonFromResponse(response)
+    typeGuard: (o: any) => o is D
+  ): D {
+    const document: D = this.parseJsonFromResponse(response)
     if (document && typeGuard(document)) {
       return document
     }
@@ -476,6 +584,11 @@ export class Client {
     throw new Errors.JsonApiError(request, response, 'Invalid response body')
   }
 
+  /**
+   * Parse JSON object from a response's body.
+   * @param response
+   * @returns If the response's body is not a valid JSON object, `null` is returned.
+   */
   private parseJsonFromResponse (response: HttpAdapter.Response): any {
     if (response.body) {
       try {
@@ -488,7 +601,8 @@ export class Client {
   }
 
   /**
-   * Make HTTP request on the {@link httpAdapter} and ensure the response media type is valid.
+   * Make HTTP request on the {@link httpAdapter} and ensure the response media type is valid according to the JSON:API specification.
+   * @see {@link https://jsonapi.org/format/#content-negotiation-clients}
    * @param request
    * @returns
    */
@@ -502,13 +616,13 @@ export class Client {
 
   /**
    * Validate the response media type.
-   * Clients MUST ignore any parameters for the "application/vnd.api+json" media type received in the "Content-Type" header of response documents.
    * @param response
    * @returns
    * @see {@link https://jsonapi.org/format/#content-negotiation-clients}
    */
   private validateResponseMediaType (response: HttpAdapter.Response) {
     if (response.body && response.body.trim().length > 0) {
+      // Clients MUST ignore any parameters for the "application/vnd.api+json" media type received in the "Content-Type" header of response documents.
       const contentType = response.headers['Content-Type'] || response.headers['content-type']
       if (!contentType || contentType.indexOf('application/vnd.api+json') !== 0) {
         return false
