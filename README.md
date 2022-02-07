@@ -22,7 +22,7 @@ import { HttpAdapters, JsonApi } from 'jsonapi-client'
 
 const httpAdapter = new HttpAdapters.FetchHttpAdapter(fetch)
 const client = new JsonApi.Client(httpAdapter, {
-  'Authorization': 'Basic ' + btoa(username + ":" + password)
+  'Authorization': 'Basic ' + btoa(username + ':' + password)
 })
 
 const result = await client.fetch('https://example.com/articles')
