@@ -17,7 +17,6 @@ TypeScript and JavaScript client for web API implementing [JSON:API v1.0](https:
 ## Usage
 
 ```ts
-
 import { HttpAdapters, JsonApi } from 'jsonapi-client'
 
 const httpAdapter = new HttpAdapters.FetchHttpAdapter(fetch)
