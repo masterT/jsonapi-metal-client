@@ -3,7 +3,7 @@ import * as metaDocumentFixture from '../../fixtures/meta-document.json'
 import { HttpAdapter, JsonApi } from '../../../src'
 
 class HttpAdapterMock implements HttpAdapter.Adapter {
-  request(options: HttpAdapter.Request): Promise<HttpAdapter.Response> {
+  request(options: HttpAdapter.AdapterRequest): Promise<HttpAdapter.AdapterResponse> {
     throw new Error('Method not implemented.');
   }
 }
@@ -12,8 +12,8 @@ describe('JsonApi.Client', () => {
   let httpAdapter: HttpAdapter.Adapter
   let client: JsonApi.Client
   let requestFunction: any
-  let response: HttpAdapter.Response
-  let request: HttpAdapter.Request
+  let response: HttpAdapter.AdapterResponse
+  let request: HttpAdapter.AdapterRequest
 
   beforeEach(() => {
     httpAdapter = new HttpAdapterMock()

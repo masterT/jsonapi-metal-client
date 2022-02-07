@@ -2,9 +2,9 @@
  * Generated type guards for "HttpAdapter.ts".
  * WARNING: Do not manually change this file.
  */
-import { Response, Request, Adapter } from "./HttpAdapter";
+import { AdapterResponse, AdapterRequest, Adapter } from "./HttpAdapter";
 
-export function isResponse(obj: any, _argumentName?: string): obj is Response {
+export function isAdapterResponse(obj: any, _argumentName?: string): obj is AdapterResponse {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -18,7 +18,7 @@ export function isResponse(obj: any, _argumentName?: string): obj is Response {
     )
 }
 
-export function isRequest(obj: any, _argumentName?: string): obj is Request {
+export function isAdapterRequest(obj: any, _argumentName?: string): obj is AdapterRequest {
     return (
         (obj !== null &&
             typeof obj === "object" ||

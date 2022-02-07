@@ -3,7 +3,7 @@
  * WARNING: Do not manually change this file.
  */
 import { Document, DataDocument, MetaDocument, ErrorDocument, FetchResponse, FetchResourceResponse, FetchResourceIndividualResponse, FetchResourceCollectionResponse, FetchRelationshipResponse, FetchRelationshipToOneResponse, FetchRelationshipToManyResponse, CreateResourceDocument, UpdateResourceDocument, UpdateRelationshipDocument, UpdateRelationshipResponse, UpdateRelationshipToOneDocument, UpdateRelationshipToOneResponse, UpdateRelationshipToManyDocument, UpdateRelationshipToManyResponse } from "./Document";
-import { isResourceIdentifierObject, isResourceObject, isMetaObject, isJsonApiObject, isLinksObject, isErrorObject, isAttributesObject, isRelationshipsObject } from "./DocumentMember.TypeGuards";
+import { isResourceIdentifierObject, isResourceObject, isMetaObject, isJsonApiObject, isLinksObject, isErrorObject, isPaginationLinks, isAttributesObject, isRelationshipsObject } from "./DocumentMember.TypeGuards";
 
 export function isDocument(obj: any, _argumentName?: string): obj is Document {
     return (
@@ -130,7 +130,8 @@ export function isFetchResourceCollectionResponse(obj: any, _argumentName?: stri
         (typeof obj.jsonapi === "undefined" ||
             isJsonApiObject(obj.jsonapi) as boolean) &&
         (typeof obj.links === "undefined" ||
-            isLinksObject(obj.links) as boolean)
+            isLinksObject(obj.links) as boolean &&
+            isPaginationLinks(obj.links) as boolean)
     )
 }
 
@@ -181,7 +182,8 @@ export function isFetchRelationshipToManyResponse(obj: any, _argumentName?: stri
         (typeof obj.jsonapi === "undefined" ||
             isJsonApiObject(obj.jsonapi) as boolean) &&
         (typeof obj.links === "undefined" ||
-            isLinksObject(obj.links) as boolean)
+            isLinksObject(obj.links) as boolean &&
+            isPaginationLinks(obj.links) as boolean)
     )
 }
 

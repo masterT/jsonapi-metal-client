@@ -569,8 +569,8 @@ export class Client {
    * @returns
    */
    private parseDocumentFromResponse<D> (
-    request: HttpAdapter.Request,
-    response: HttpAdapter.Response,
+    request: HttpAdapter.AdapterRequest,
+    response: HttpAdapter.AdapterResponse,
     typeGuard: (o: any) => o is D
   ): D {
     const document: D = this.parseJsonFromResponse(response)
@@ -586,7 +586,7 @@ export class Client {
    * @param response
    * @returns If the response's body is not a valid JSON object, `null` is returned.
    */
-  private parseJsonFromResponse (response: HttpAdapter.Response): any {
+  private parseJsonFromResponse (response: HttpAdapter.AdapterResponse): any {
     if (response.body) {
       try {
         return JSON.parse(response.body)
@@ -603,12 +603,12 @@ export class Client {
    * @param request
    * @returns
    */
-  private async request (requestConfiguration: HttpAdapter.Request): Promise<[HttpAdapter.Request, HttpAdapter.Response]> {
+  private async request (options: HttpAdapter.AdapterRequest): Promise<[HttpAdapter.AdapterRequest, HttpAdapter.AdapterResponse]> {
     const request = {
-      ...requestConfiguration,
+      ...options,
       headers: {
         ...this.defaultHttpHeaders,
-        ...requestConfiguration.headers
+        ...options.headers
       }
     }
     const response = await this.httpAdapter.request(request)
@@ -624,7 +624,7 @@ export class Client {
    * @returns
    * @see {@link https://jsonapi.org/format/#content-negotiation-clients}
    */
-  private validateResponseMediaType (response: HttpAdapter.Response) {
+  private validateResponseMediaType (response: HttpAdapter.AdapterResponse) {
     if (response.body && response.body.trim().length > 0) {
       // Clients MUST ignore any parameters for the "application/vnd.api+json" media type received in the "Content-Type" header of response documents.
       const contentType = response.headers['Content-Type'] || response.headers['content-type']

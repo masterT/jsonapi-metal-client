@@ -1,14 +1,14 @@
 import * as TypeGuards from "./HttpAdapter.TypeGuards"
 
-/** @see {@link isResponse} ts-auto-guard:type-guard */
-export interface Response {
+/** @see {@link isAdapterResponse} ts-auto-guard:type-guard */
+export interface AdapterResponse {
   status: number,
   headers: { [key: string]: string }
   body?: string
 }
 
-/** @see {@link isRequest} ts-auto-guard:type-guard */
-export interface Request {
+/** @see {@link isAdapterRequest} ts-auto-guard:type-guard */
+export interface AdapterRequest {
   url: string
   method: string
   headers?: { [key: string]: string }
@@ -17,7 +17,12 @@ export interface Request {
 
 /** @see {@link isAdapter} ts-auto-guard:type-guard */
 export interface Adapter {
-  request(options: Request): Promise<Response>
+  /**
+   * Make an HTTP request.
+   * @param options
+   * @returns
+   */
+  request(options: AdapterRequest): Promise<AdapterResponse>
 }
 
 export { TypeGuards }

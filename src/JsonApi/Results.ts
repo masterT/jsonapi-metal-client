@@ -7,8 +7,8 @@ import { Document } from './Specification'
 export type ResultFailure = {
   isSuccess: false
   document: Document.ErrorDocument | null
-  request: HttpAdapter.Request
-  response: HttpAdapter.Response
+  request: HttpAdapter.AdapterRequest
+  response: HttpAdapter.AdapterResponse
 }
 
 /**
@@ -17,8 +17,8 @@ export type ResultFailure = {
 export type ResultSuccess<D> = {
   isSuccess: true
   document: D
-  request: HttpAdapter.Request
-  response: HttpAdapter.Response
+  request: HttpAdapter.AdapterRequest
+  response: HttpAdapter.AdapterResponse
 }
 
 /**
