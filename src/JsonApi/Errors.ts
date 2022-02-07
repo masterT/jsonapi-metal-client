@@ -1,14 +1,18 @@
-import * as HttpAdapter from '../HttpAdapter'
+import * as HttpAdapter from '../HttpAdapter';
 
 export class JsonApiError extends Error {
-  request: HttpAdapter.AdapterRequest
-  response: HttpAdapter.AdapterResponse
+  request: HttpAdapter.AdapterRequest;
+  response: HttpAdapter.AdapterResponse;
 
-  constructor(request: HttpAdapter.AdapterRequest, response: HttpAdapter.AdapterResponse, message: string) {
-    super(message)
-    Object.setPrototypeOf(this, new.target.prototype)
-    this.request = request
-    this.response = response
+  constructor(
+    request: HttpAdapter.AdapterRequest,
+    response: HttpAdapter.AdapterResponse,
+    message: string
+  ) {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
+    this.request = request;
+    this.response = response;
   }
 }
 

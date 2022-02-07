@@ -76,6 +76,20 @@ Generate documentation using [TypeDoc](https://typedoc.org/):
 yarn documentation
 ```
 
+### Lint
+
+Executing lint check using [ESLint](https://eslint.org/):
+
+```shell
+yarn lint
+```
+
+Executing lint fix using [ESLint](https://eslint.org/):
+
+```shell
+yarn format
+```
+
 ### Test
 
 Executing test suite using [Jest](https://jestjs.io/):

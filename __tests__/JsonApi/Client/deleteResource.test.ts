@@ -1,78 +1,80 @@
-import * as errorDocumentFixture from '../../fixtures/error-document.json'
-import * as metaDocumentFixture from '../../fixtures/meta-document.json'
-import { HttpAdapter, JsonApi } from '../../../src'
+import * as errorDocumentFixture from '../../fixtures/error-document.json';
+import * as metaDocumentFixture from '../../fixtures/meta-document.json';
+import { HttpAdapter, JsonApi } from '../../../src';
 
 class HttpAdapterMock implements HttpAdapter.Adapter {
-  request(options: HttpAdapter.AdapterRequest): Promise<HttpAdapter.AdapterResponse> {
+  request(
+    options: HttpAdapter.AdapterRequest
+  ): Promise<HttpAdapter.AdapterResponse> {
     throw new Error('Method not implemented.');
   }
 }
 
 describe('JsonApi.Client', () => {
-  let httpAdapter: HttpAdapter.Adapter
-  let client: JsonApi.Client
-  let requestFunction: any
-  let response: HttpAdapter.AdapterResponse
-  let request: HttpAdapter.AdapterRequest
+  let httpAdapter: HttpAdapter.Adapter;
+  let client: JsonApi.Client;
+  let requestFunction: any;
+  let response: HttpAdapter.AdapterResponse;
+  let request: HttpAdapter.AdapterRequest;
 
   beforeEach(() => {
-    httpAdapter = new HttpAdapterMock()
-    requestFunction = jest.fn().mockImplementation(() => response)
-    httpAdapter.request = requestFunction.bind(httpAdapter)
-    client = new JsonApi.Client(httpAdapter)
-  })
+    httpAdapter = new HttpAdapterMock();
+    requestFunction = jest.fn().mockImplementation(() => response);
+    httpAdapter.request = requestFunction.bind(httpAdapter);
+    client = new JsonApi.Client(httpAdapter);
+  });
 
   describe('deleteResource', () => {
-    const url = 'http://example.com/articles/1'
+    const url = 'http://example.com/articles/1';
 
     beforeEach(() => {
       request = {
         url,
         headers: {
-          'Accept': 'application/vnd.api+json'
+          Accept: 'application/vnd.api+json'
         },
         method: 'DELETE',
         body: null
-      }
+      };
 
       response = {
         headers: {},
         status: 204,
         body: ''
-      }
-    })
+      };
+    });
 
     test('calls request on the httpAdapter', () => {
-      client.deleteResource(url)
+      client.deleteResource(url);
 
-      expect(requestFunction.mock.calls.length).toBe(1)
-      expect(requestFunction.mock.calls[0]).toEqual([request])
-    })
+      expect(requestFunction.mock.calls.length).toBe(1);
+      expect(requestFunction.mock.calls[0]).toEqual([request]);
+    });
 
     describe('with defaultHttpHeaders', () => {
       beforeEach(() => {
         client.defaultHttpHeaders = {
           'x-foo': 'bar'
-        }
-      })
+        };
+      });
 
       test('calls request on the httpAdapter with defaultHttpHeaders', () => {
-        client.deleteResource(url)
+        client.deleteResource(url);
 
-        expect(requestFunction.mock.calls.length).toBe(1)
+        expect(requestFunction.mock.calls.length).toBe(1);
         expect(requestFunction.mock.calls[0]).toEqual([
           {
             url,
             headers: {
-              'Accept': 'application/vnd.api+json',
+              Accept: 'application/vnd.api+json',
               'x-foo': 'bar'
             },
             method: 'DELETE',
             body: null
           }
-        ])
-      })
-    })
+        ]);
+      });
+    });
 
     describe('when status 200', () => {
       describe('when media type is application/vnd.api+json', () => {
@@ -84,8 +86,8 @@ describe('JsonApi.Client', () => {
               },
               status: 200,
               body: JSON.stringify(metaDocumentFixture)
-            }
-          })
+            };
+          });
 
           test('resolves result success with document', async () => {
             await expect(client.deleteResource(url)).resolves.toEqual({
@@ -93,9 +95,9 @@ describe('JsonApi.Client', () => {
               document: metaDocumentFixture,
               request,
               response
-            })
-          })
-        })
+            });
+          });
+        });
 
         describe('when body is not a meta document', () => {
           beforeEach(() => {
@@ -105,8 +107,8 @@ describe('JsonApi.Client', () => {
               },
               status: 200,
               body: JSON.stringify({})
-            }
-          })
+            };
+          });
 
           test('resolves not successful result without document', async () => {
             await expect(client.deleteResource(url)).resolves.toEqual({
@@ -114,10 +116,10 @@ describe('JsonApi.Client', () => {
               document: null,
               request,
               response
-            })
-          })
-        })
-      })
+            });
+          });
+        });
+      });
 
       describe('when media type is not application/vnd.api+json', () => {
         beforeEach(() => {
@@ -127,8 +129,8 @@ describe('JsonApi.Client', () => {
             },
             status: 200,
             body: '<!DOCTYPE html>'
-          }
-        })
+          };
+        });
 
         test('resolves not successful result without document', async () => {
           await expect(client.deleteResource(url)).resolves.toEqual({
@@ -136,10 +138,10 @@ describe('JsonApi.Client', () => {
             document: null,
             request,
             response
-          })
-        })
-      })
-    })
+          });
+        });
+      });
+    });
 
     describe('when status 202', () => {
       beforeEach(() => {
@@ -147,8 +149,8 @@ describe('JsonApi.Client', () => {
           headers: {},
           status: 202,
           body: ''
-        }
-      })
+        };
+      });
 
       test('resolves result success without document', async () => {
         await expect(client.deleteResource(url)).resolves.toEqual({
@@ -156,9 +158,9 @@ describe('JsonApi.Client', () => {
           document: null,
           request,
           response
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('when status 204', () => {
       beforeEach(() => {
@@ -166,8 +168,8 @@ describe('JsonApi.Client', () => {
           headers: {},
           status: 204,
           body: ''
-        }
-      })
+        };
+      });
 
       test('resolves result success without document', async () => {
         await expect(client.deleteResource(url)).resolves.toEqual({
@@ -175,9 +177,9 @@ describe('JsonApi.Client', () => {
           document: null,
           request,
           response
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('when response other status', () => {
       describe('when media type is application/vnd.api+json', () => {
@@ -189,8 +191,8 @@ describe('JsonApi.Client', () => {
               },
               status: 500,
               body: JSON.stringify(errorDocumentFixture)
-            }
-          })
+            };
+          });
 
           test('resolves not successful result with document errors', async () => {
             await expect(client.deleteResource(url)).resolves.toEqual({
@@ -198,9 +200,9 @@ describe('JsonApi.Client', () => {
               document: errorDocumentFixture,
               request,
               response
-            })
-          })
-        })
+            });
+          });
+        });
 
         describe('when body is not document with errors', () => {
           beforeEach(() => {
@@ -210,8 +212,8 @@ describe('JsonApi.Client', () => {
               },
               status: 500,
               body: JSON.stringify(metaDocumentFixture)
-            }
-          })
+            };
+          });
 
           test('resolves not successful result without document', async () => {
             await expect(client.deleteResource(url)).resolves.toEqual({
@@ -219,10 +221,10 @@ describe('JsonApi.Client', () => {
               document: null,
               request,
               response
-            })
-          })
-        })
-      })
+            });
+          });
+        });
+      });
 
       describe('when media type is not application/vnd.api+json', () => {
         beforeEach(() => {
@@ -232,8 +234,8 @@ describe('JsonApi.Client', () => {
             },
             status: 500,
             body: '<!DOCTYPE html>'
-          }
-        })
+          };
+        });
 
         test('resolves not successful result without document', async () => {
           await expect(client.deleteResource(url)).resolves.toEqual({
@@ -241,9 +243,9 @@ describe('JsonApi.Client', () => {
             document: null,
             request,
             response
-          })
-        })
-      })
-    })
-  })
-})
+          });
+        });
+      });
+    });
+  });
+});

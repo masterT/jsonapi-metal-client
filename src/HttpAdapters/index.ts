@@ -1,1 +1,1 @@
-export { FetchHttpAdapter } from './FetchHttpAdapter'
+export { FetchHttpAdapter } from './FetchHttpAdapter';
