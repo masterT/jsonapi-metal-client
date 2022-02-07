@@ -13,8 +13,14 @@ export class Client {
    */
   httpAdapter: HttpAdapter.Adapter
 
-  constructor (httpAdapter: HttpAdapter.Adapter) {
+  /**
+   * Default HTTP headers to set on every HTTP request.
+   */
+  defaultHttpHeaders: { [key: string]: string }
+
+  constructor (httpAdapter: HttpAdapter.Adapter, defaultHttpHeaders: { [key: string]: string } = {}) {
     this.httpAdapter = httpAdapter
+    this.defaultHttpHeaders = defaultHttpHeaders
   }
 
   /**
@@ -120,7 +126,7 @@ export class Client {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
-      const request = {
+      const [request, response] = await this.request({
         url,
         method: 'POST',
         headers: {
@@ -128,9 +134,7 @@ export class Client {
           'Content-Type': 'application/vnd.api+json'
         },
         body: JSON.stringify(document)
-      }
-
-      const response = await this.request(request)
+      })
       switch (response.status) {
         case 201:
           // TODO: If the resource object returned by the response contains a self key in its links member and a Location header
@@ -208,7 +212,7 @@ export class Client {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
-      const request = {
+      const [request, response] = await this.request({
         url,
         method: 'PATCH',
         headers: {
@@ -216,10 +220,8 @@ export class Client {
           'Content-Type': 'application/vnd.api+json'
         },
         body: JSON.stringify(document)
-      }
-
+      })
       let resultDocument
-      const response = await this.request(request)
       switch (response.status) {
         case 200:
           resultDocument = this.parseJsonFromResponse(response)
@@ -286,7 +288,7 @@ export class Client {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
-      const request = {
+      const [request, response] = await this.request({
         url,
         headers: {
           'Accept': 'application/vnd.api+json',
@@ -294,9 +296,8 @@ export class Client {
         },
         method: 'PATCH',
         body: JSON.stringify(document)
-      }
+      })
       let resultDocument
-      const response = await this.request(request)
       switch (response.status) {
         case 200:
           resultDocument = this.parseJsonFromResponse(response)
@@ -373,16 +374,14 @@ export class Client {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
-      const request = {
+      const [request, response] = await this.request({
         url,
         method: 'DELETE',
         headers: {
           'Accept': 'application/vnd.api+json'
         },
         body: null
-      }
-
-      const response = await this.request(request)
+      })
       switch (response.status) {
         case 200:
           // A server MUST return a 200 OK status code if a deletion request is successful and the server responds with only top-level meta data.
@@ -455,15 +454,14 @@ export class Client {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
-      const request = {
+      const [request, response] = await this.request({
         url,
         headers: {
           'Accept': 'application/vnd.api+json'
         },
         method: 'GET',
         body: null
-      }
-      const response = await this.request(request)
+      })
       switch (response.status) {
         case 200:
           return {
@@ -502,7 +500,7 @@ export class Client {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
-      const request = {
+      const [request, response] = await this.request({
         url,
         headers: {
           'Accept': 'application/vnd.api+json',
@@ -510,9 +508,8 @@ export class Client {
         },
         method,
         body: JSON.stringify(document)
-      }
+      })
       let resultDocument
-      const response = await this.request(request)
       switch (response.status) {
         case 200:
           resultDocument = this.parseJsonFromResponse(response)
@@ -606,12 +603,19 @@ export class Client {
    * @param request
    * @returns
    */
-  private async request (request: HttpAdapter.Request): Promise<HttpAdapter.Response> {
+  private async request (requestConfiguration: HttpAdapter.Request): Promise<[HttpAdapter.Request, HttpAdapter.Response]> {
+    const request = {
+      ...requestConfiguration,
+      headers: {
+        ...this.defaultHttpHeaders,
+        ...requestConfiguration.headers
+      }
+    }
     const response = await this.httpAdapter.request(request)
     if (!this.validateResponseMediaType(response)) {
       throw new Errors.JsonApiError(request, response, 'Invalid response media type')
     }
-    return response
+    return [request, response]
   }
 
   /**

@@ -53,6 +53,31 @@ describe('JsonApi.Client', () => {
       expect(requestFunction.mock.calls[0]).toEqual([request])
     })
 
+    describe('with defaultHttpHeaders', () => {
+      beforeEach(() => {
+        client.defaultHttpHeaders = {
+          'x-foo': 'bar'
+        }
+      })
+
+      test('calls request on the httpAdapter with defaultHttpHeaders', () => {
+        client.fetchRelationship(url)
+
+        expect(requestFunction.mock.calls.length).toBe(1)
+        expect(requestFunction.mock.calls[0]).toEqual([
+          {
+            url,
+            headers: {
+              'Accept': 'application/vnd.api+json',
+              'x-foo': 'bar'
+            },
+            method: 'GET',
+            body: null
+          }
+        ])
+      })
+    })
+
     describe('when status 200', () => {
       describe('when media type is application/vnd.api+json', () => {
         describe('when body is document with relationship to-one', () => {

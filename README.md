@@ -21,7 +21,9 @@ TypeScript and JavaScript client for web API implementing [JSON:API v1.0](https:
 import { HttpAdapters, JsonApi } from 'jsonapi-client'
 
 const httpAdapter = new HttpAdapters.FetchHttpAdapter(fetch)
-const client = new JsonApi.Client(httpAdapter)
+const client = new JsonApi.Client(httpAdapter, {
+  'Authorization': 'Basic ' + btoa(username + ":" + password)
+})
 
 const result = await client.fetch('https://example.com/articles')
 if (result.isSuccess) {
