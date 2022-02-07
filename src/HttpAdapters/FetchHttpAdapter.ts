@@ -1,56 +1,29 @@
-import { AbstractAdapter } from './AbstractAdapter'
 import * as HttpAdapter from '../HttpAdapter'
-
-type DefaultRequest = Pick<
-  RequestInit,
-  | "cache"
-  | "credentials"
-  | "headers"
-  | "integrity"
-  | "keepalive"
-  | "mode"
-  | "redirect"
-  | "referrer"
-  | "referrerPolicy"
-  | "signal"
->
 
 type FetchFunction = typeof fetch
 
-export class FetchHttpAdapter extends AbstractAdapter<DefaultRequest> {
+export class FetchHttpAdapter implements HttpAdapter.Adapter {
   fetch: FetchFunction
 
-  constructor (fetch: FetchFunction, defaultRequest?: DefaultRequest) {
-    super(defaultRequest)
+  constructor (fetch: FetchFunction) {
     this.fetch = fetch
   }
 
   async request (options: HttpAdapter.Request): Promise<HttpAdapter.Response> {
-    const resource = options.url
-    const init = this.buildInit(options)
-    const response = await this.fetch(resource, init)
-    return this.buildHttpClientResponse(response)
-  }
-
-  private buildInit (options: HttpAdapter.Request) {
+    const { url, method, headers, body } = options
+    const response = await this.fetch(url, { method, headers, body })
     return {
-      ...(this.defaultRequest || {}),
-      method: options.method,
-      headers: {
-        ...options.headers,
-        ...(this.defaultRequest?.headers || {}),
-      },
-      body: options.body
-    }
-  }
-
-  private async buildHttpClientResponse(response: Response): Promise<HttpAdapter.Response> {
-    const httpClientResponse: HttpAdapter.Response = {
       status: response.status,
       body: await response.text(),
-      headers: {}
+      headers: this.extractResponseHeaders(response)
     }
-    response.headers.forEach((value, key) => { httpClientResponse.headers[key] = value })
-    return httpClientResponse
+  }
+
+  private extractResponseHeaders (response: Response) {
+    const headers: { [ley: string]: string } = {}
+    response.headers.forEach((value, key) => {
+      headers[key] = value
+    })
+    return headers
   }
 }
