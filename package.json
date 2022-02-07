@@ -11,9 +11,10 @@
   "scripts": {
     "prepublish": "tsc",
     "build": "tsc",
-    "lint": "yarn run eslint . --ext js,.ts",
+    "lint": "eslint .",
     "type-guards": "ts-auto-guard --import-guards --guard-file-name='TypeGuards'",
     "documentation": "typedoc src/index.ts",
+    "format": "eslint . --fix",
     "test": "jest"
   },
   "devDependencies": {
@@ -21,7 +22,10 @@
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.7",
+    "prettier": "^2.5.1",
     "ts-auto-guard": "2.2.1",
     "ts-jest": "^27.1.2",
     "typedoc": "^0.22.10",
