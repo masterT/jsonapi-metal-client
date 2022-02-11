@@ -1,12 +1,12 @@
 import * as HttpAdapter from '../HttpAdapter';
-import { Document } from './Specification';
+import * as Specification from './Specification';
 
 /**
  * Represents a failed JSON:API operation result.
  */
 export type ResultFailure = {
   isSuccess: false;
-  document: Document.ErrorDocument | null;
+  document: Specification.ErrorDocument | null;
   request: HttpAdapter.AdapterRequest;
   response: HttpAdapter.AdapterResponse;
 };

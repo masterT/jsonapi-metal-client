@@ -1,6 +1,6 @@
 import * as HttpAdapter from '../HttpAdapter';
 import * as Errors from './Errors';
-import { Document } from './Specification';
+import * as Specification from './Specification';
 import { Result } from './Results';
 
 /**
@@ -32,10 +32,10 @@ export class Client {
    * @param url
    * @returns
    */
-  async fetch(url: string): Promise<Result<Document.FetchResponse>> {
-    return await this.requestFetchData<Document.FetchResponse>(
+  async fetch(url: string): Promise<Result<Specification.FetchResponse>> {
+    return await this.requestFetchData<Specification.FetchResponse>(
       url,
-      Document.TypeGuards.isFetchResponse
+      Specification.TypeGuards.isFetchResponse
     );
   }
 
@@ -47,10 +47,10 @@ export class Client {
    */
   async fetchResource(
     url: string
-  ): Promise<Result<Document.FetchResourceResponse>> {
-    return await this.requestFetchData<Document.FetchResourceResponse>(
+  ): Promise<Result<Specification.FetchResourceResponse>> {
+    return await this.requestFetchData<Specification.FetchResourceResponse>(
       url,
-      Document.TypeGuards.isFetchResourceResponse
+      Specification.TypeGuards.isFetchResourceResponse
     );
   }
 
@@ -62,10 +62,10 @@ export class Client {
    */
   async fetchResourceIndividual(
     url: string
-  ): Promise<Result<Document.FetchResourceIndividualResponse>> {
-    return await this.requestFetchData<Document.FetchResourceIndividualResponse>(
+  ): Promise<Result<Specification.FetchResourceIndividualResponse>> {
+    return await this.requestFetchData<Specification.FetchResourceIndividualResponse>(
       url,
-      Document.TypeGuards.isFetchResourceIndividualResponse
+      Specification.TypeGuards.isFetchResourceIndividualResponse
     );
   }
 
@@ -77,10 +77,10 @@ export class Client {
    */
   async fetchResourceCollection(
     url: string
-  ): Promise<Result<Document.FetchResourceCollectionResponse>> {
-    return await this.requestFetchData<Document.FetchResourceCollectionResponse>(
+  ): Promise<Result<Specification.FetchResourceCollectionResponse>> {
+    return await this.requestFetchData<Specification.FetchResourceCollectionResponse>(
       url,
-      Document.TypeGuards.isFetchResourceCollectionResponse
+      Specification.TypeGuards.isFetchResourceCollectionResponse
     );
   }
   //
@@ -93,10 +93,10 @@ export class Client {
    */
   async fetchRelationship(
     url: string
-  ): Promise<Result<Document.FetchRelationshipResponse>> {
-    return await this.requestFetchData<Document.FetchRelationshipResponse>(
+  ): Promise<Result<Specification.FetchRelationshipResponse>> {
+    return await this.requestFetchData<Specification.FetchRelationshipResponse>(
       url,
-      Document.TypeGuards.isFetchRelationshipResponse
+      Specification.TypeGuards.isFetchRelationshipResponse
     );
   }
 
@@ -108,10 +108,10 @@ export class Client {
    */
   async fetchRelationshipToOne(
     url: string
-  ): Promise<Result<Document.FetchRelationshipToOneResponse>> {
-    return await this.requestFetchData<Document.FetchRelationshipToOneResponse>(
+  ): Promise<Result<Specification.FetchRelationshipToOneResponse>> {
+    return await this.requestFetchData<Specification.FetchRelationshipToOneResponse>(
       url,
-      Document.TypeGuards.isFetchRelationshipToOneResponse
+      Specification.TypeGuards.isFetchRelationshipToOneResponse
     );
   }
 
@@ -123,10 +123,10 @@ export class Client {
    */
   async fetchRelationshipToMany(
     url: string
-  ): Promise<Result<Document.FetchRelationshipToManyResponse>> {
-    return await this.requestFetchData<Document.FetchRelationshipToManyResponse>(
+  ): Promise<Result<Specification.FetchRelationshipToManyResponse>> {
+    return await this.requestFetchData<Specification.FetchRelationshipToManyResponse>(
       url,
-      Document.TypeGuards.isFetchRelationshipToManyResponse
+      Specification.TypeGuards.isFetchRelationshipToManyResponse
     );
   }
 
@@ -139,8 +139,8 @@ export class Client {
    */
   async createResource(
     url: string,
-    document: Document.CreateResourceDocument
-  ): Promise<Result<Document.CreateResourceResponse>> {
+    document: Specification.CreateResourceDocument
+  ): Promise<Result<Specification.CreateResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -160,10 +160,10 @@ export class Client {
           return {
             isSuccess: true,
             document:
-              this.parseDocumentFromResponse<Document.FetchResourceIndividualResponse>(
+              this.parseDocumentFromResponse<Specification.FetchResourceIndividualResponse>(
                 request,
                 response,
-                Document.TypeGuards.isFetchResourceIndividualResponse
+                Specification.TypeGuards.isFetchResourceIndividualResponse
               ),
             request,
             response
@@ -183,10 +183,10 @@ export class Client {
       }
       return {
         isSuccess: false,
-        document: this.parseDocumentFromResponse<Document.ErrorDocument>(
+        document: this.parseDocumentFromResponse<Specification.ErrorDocument>(
           request,
           response,
-          Document.TypeGuards.isErrorDocument
+          Specification.TypeGuards.isErrorDocument
         ),
         request,
         response
@@ -214,8 +214,8 @@ export class Client {
    */
   async createRelationshipToMany(
     url: string,
-    document: Document.UpdateRelationshipToManyDocument
-  ): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
+    document: Specification.UpdateRelationshipToManyDocument
+  ): Promise<Result<Specification.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(url, 'POST', document);
   }
 
@@ -228,8 +228,8 @@ export class Client {
    */
   async updateResource(
     url: string,
-    document: Document.UpdateResourceDocument
-  ): Promise<Result<Document.UpdateResourceResponse>> {
+    document: Specification.UpdateResourceDocument
+  ): Promise<Result<Specification.UpdateResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -248,7 +248,7 @@ export class Client {
           resultDocument = this.parseJsonFromResponse(response);
           // If a server accepts an update but also changes the resource(s) in ways other than those specified by the request (for example, updating the updated-at attribute or a computed sha), it MUST return a 200 OK response. The response document MUST include a representation of the updated resource(s) as if a GET request was made to the request URL.
           if (
-            Document.TypeGuards.isFetchResourceIndividualResponse(
+            Specification.TypeGuards.isFetchResourceIndividualResponse(
               resultDocument
             )
           ) {
@@ -260,7 +260,7 @@ export class Client {
             };
           }
           // A server MUST return a 200 OK status code if an update is successful, the client’s current fields remain up to date, and the server responds only with top-level meta data. In this case the server MUST NOT include a representation of the updated resource(s).
-          if (Document.TypeGuards.isMetaDocument(resultDocument)) {
+          if (Specification.TypeGuards.isMetaDocument(resultDocument)) {
             return {
               isSuccess: true,
               document: resultDocument,
@@ -280,10 +280,10 @@ export class Client {
       }
       return {
         isSuccess: false,
-        document: this.parseDocumentFromResponse<Document.ErrorDocument>(
+        document: this.parseDocumentFromResponse<Specification.ErrorDocument>(
           request,
           response,
-          Document.TypeGuards.isErrorDocument
+          Specification.TypeGuards.isErrorDocument
         ),
         request,
         response
@@ -311,8 +311,8 @@ export class Client {
    */
   async updateRelationshipToOne(
     url: string,
-    document: Document.UpdateRelationshipToOneDocument
-  ): Promise<Result<Document.UpdateRelationshipToOneResponse>> {
+    document: Specification.UpdateRelationshipToOneDocument
+  ): Promise<Result<Specification.UpdateRelationshipToOneResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -331,7 +331,7 @@ export class Client {
           resultDocument = this.parseJsonFromResponse(response);
           // If a server accepts an update but also changes the targeted relationship(s) in other ways than those specified by the request, it MUST return a 200 OK response. The response document MUST include a representation of the updated relationship(s).
           if (
-            Document.TypeGuards.isFetchRelationshipToOneResponse(resultDocument)
+            Specification.TypeGuards.isFetchRelationshipToOneResponse(resultDocument)
           ) {
             return {
               isSuccess: true,
@@ -341,7 +341,7 @@ export class Client {
             };
           }
           // A server MUST return a 200 OK status code if an update is successful, the client’s current data remain up to date, and the server responds only with top-level meta data. In this case the server MUST NOT include a representation of the updated relationship(s).
-          if (Document.TypeGuards.isMetaDocument(resultDocument)) {
+          if (Specification.TypeGuards.isMetaDocument(resultDocument)) {
             return {
               isSuccess: true,
               document: resultDocument,
@@ -359,10 +359,10 @@ export class Client {
       }
       return {
         isSuccess: false,
-        document: this.parseDocumentFromResponse<Document.ErrorDocument>(
+        document: this.parseDocumentFromResponse<Specification.ErrorDocument>(
           request,
           response,
-          Document.TypeGuards.isErrorDocument
+          Specification.TypeGuards.isErrorDocument
         ),
         request,
         response
@@ -390,8 +390,8 @@ export class Client {
    */
   async updateRelationshipToMany(
     url: string,
-    document: Document.UpdateRelationshipToManyDocument
-  ): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
+    document: Specification.UpdateRelationshipToManyDocument
+  ): Promise<Result<Specification.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(url, 'PATCH', document);
   }
 
@@ -403,7 +403,7 @@ export class Client {
    */
   async deleteResource(
     url: string
-  ): Promise<Result<Document.DeleteResourceResponse>> {
+  ): Promise<Result<Specification.DeleteResourceResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -420,10 +420,10 @@ export class Client {
           // A server MUST return a 200 OK status code if a deletion request is successful and the server responds with only top-level meta data.
           return {
             isSuccess: true,
-            document: this.parseDocumentFromResponse<Document.MetaDocument>(
+            document: this.parseDocumentFromResponse<Specification.MetaDocument>(
               request,
               response,
-              Document.TypeGuards.isMetaDocument
+              Specification.TypeGuards.isMetaDocument
             ),
             request,
             response
@@ -438,10 +438,10 @@ export class Client {
       }
       return {
         isSuccess: false,
-        document: this.parseDocumentFromResponse<Document.ErrorDocument>(
+        document: this.parseDocumentFromResponse<Specification.ErrorDocument>(
           request,
           response,
-          Document.TypeGuards.isErrorDocument
+          Specification.TypeGuards.isErrorDocument
         ),
         request,
         response
@@ -469,8 +469,8 @@ export class Client {
    */
   async deleteRelationshipToMany(
     url: string,
-    document: Document.UpdateRelationshipToManyDocument
-  ): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
+    document: Specification.UpdateRelationshipToManyDocument
+  ): Promise<Result<Specification.UpdateRelationshipToManyResponse>> {
     return await this.requestUpdateRelationshipToMany(url, 'DELETE', document);
   }
 
@@ -512,10 +512,10 @@ export class Client {
         default:
           return {
             isSuccess: false,
-            document: this.parseDocumentFromResponse<Document.ErrorDocument>(
+            document: this.parseDocumentFromResponse<Specification.ErrorDocument>(
               request,
               response,
-              Document.TypeGuards.isErrorDocument
+              Specification.TypeGuards.isErrorDocument
             ),
             request,
             response
@@ -539,7 +539,7 @@ export class Client {
     url: string,
     method: string,
     document: any
-  ): Promise<Result<Document.UpdateRelationshipToManyResponse>> {
+  ): Promise<Result<Specification.UpdateRelationshipToManyResponse>> {
     try {
       // Clients that include the JSON:API media type in their Accept header MUST
       // specify the media type there at least once without any media type parameters.
@@ -558,7 +558,7 @@ export class Client {
           resultDocument = this.parseJsonFromResponse(response);
           // If a server accepts an update but also changes the targeted relationship(s) in other ways than those specified by the request, it MUST return a 200 OK response. The response document MUST include a representation of the updated relationship(s).
           if (
-            Document.TypeGuards.isFetchRelationshipToManyResponse(
+            Specification.TypeGuards.isFetchRelationshipToManyResponse(
               resultDocument
             )
           ) {
@@ -570,7 +570,7 @@ export class Client {
             };
           }
           // A server MUST return a 200 OK status code if an update is successful, the client’s current data remain up to date, and the server responds only with top-level meta data. In this case the server MUST NOT include a representation of the updated relationship(s).
-          if (Document.TypeGuards.isMetaDocument(resultDocument)) {
+          if (Specification.TypeGuards.isMetaDocument(resultDocument)) {
             return {
               isSuccess: true,
               document: resultDocument,
@@ -588,10 +588,10 @@ export class Client {
       }
       return {
         isSuccess: false,
-        document: this.parseDocumentFromResponse<Document.ErrorDocument>(
+        document: this.parseDocumentFromResponse<Specification.ErrorDocument>(
           request,
           response,
-          Document.TypeGuards.isErrorDocument
+          Specification.TypeGuards.isErrorDocument
         ),
         request,
         response
