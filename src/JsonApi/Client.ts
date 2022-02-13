@@ -331,7 +331,9 @@ export class Client {
           resultDocument = this.parseJsonFromResponse(response);
           // If a server accepts an update but also changes the targeted relationship(s) in other ways than those specified by the request, it MUST return a 200 OK response. The response document MUST include a representation of the updated relationship(s).
           if (
-            Specification.TypeGuards.isFetchRelationshipToOneResponse(resultDocument)
+            Specification.TypeGuards.isFetchRelationshipToOneResponse(
+              resultDocument
+            )
           ) {
             return {
               isSuccess: true,
@@ -420,11 +422,12 @@ export class Client {
           // A server MUST return a 200 OK status code if a deletion request is successful and the server responds with only top-level meta data.
           return {
             isSuccess: true,
-            document: this.parseDocumentFromResponse<Specification.MetaDocument>(
-              request,
-              response,
-              Specification.TypeGuards.isMetaDocument
-            ),
+            document:
+              this.parseDocumentFromResponse<Specification.MetaDocument>(
+                request,
+                response,
+                Specification.TypeGuards.isMetaDocument
+              ),
             request,
             response
           };
@@ -512,11 +515,12 @@ export class Client {
         default:
           return {
             isSuccess: false,
-            document: this.parseDocumentFromResponse<Specification.ErrorDocument>(
-              request,
-              response,
-              Specification.TypeGuards.isErrorDocument
-            ),
+            document:
+              this.parseDocumentFromResponse<Specification.ErrorDocument>(
+                request,
+                response,
+                Specification.TypeGuards.isErrorDocument
+              ),
             request,
             response
           };
