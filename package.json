@@ -1,13 +1,12 @@
 {
-  "name": "jsonapi-client",
+  "name": "jsonapi-metal-client",
   "version": "0.0.1",
-  "description": "TypeScript and JavaScript client for web API implementing JSON:API v1.0.",
+  "description": "Bare metal TypeScript and JavaScript client for web API implementing JSON:API v1.0.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/masterT/jsonapi-client",
+  "repository": "https://github.com/masterT/jsonapi-metal-client",
   "author": "Simon Thiboutôt <hi@simonthiboutot.com>",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "prepublish": "tsc",
     "build": "tsc",
