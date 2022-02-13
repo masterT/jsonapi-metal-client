@@ -461,7 +461,7 @@ export class Client {
   }
 
   /**
-   * Remove a member from a to-many relationship.
+   * Remove members from a to-many relationship.
    * @see {@link https://jsonapi.org/format/#crud-updating-to-many-relationships}
    * @param url
    * @param document
