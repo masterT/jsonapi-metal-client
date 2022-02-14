@@ -155,7 +155,7 @@ client.deleteRelationshipToMany(
 
 ## Documentation
 
-- [Typescript documentation](#)
+- [Typescript documentation](https://masterT.github.io/jsonapi-metal-client/typescript/)
 
 ### HTTP adapter
 
