@@ -7,8 +7,11 @@
   "repository": "https://github.com/masterT/jsonapi-metal-client",
   "author": "Simon Thiboutôt <hi@simonthiboutot.com>",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "prepublish": "tsc",
+    "prepublishOnly": "tsc",
     "build": "tsc",
     "lint": "eslint .",
     "type-guards": "ts-auto-guard --import-guards --guard-file-name='TypeGuards'",
