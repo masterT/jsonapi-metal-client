@@ -219,38 +219,45 @@ The client returns a Promise that resolves with a `Result` for JSON:API operatio
 
 ```js
 const result = await client.fetch('http://examples.com/articles/1');
-if (result.isSuccess) {
-  console.log(result.document)
-  // {
-  //   "links": {
-  //     "self": "http://example.com/articles/1"
-  //   },
-  //   "data": {
-  //     "type": "articles",
-  //     "id": "1",
-  //     "attributes": {
-  //       "title": "JSON:API paints my bikeshed!"
-  //     },
-  //     "relationships": {
-  //       "author": {
-  //         "links": {
-  //           "related": "http://example.com/articles/1/author"
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-} else {
-  if (result.document) {
-    console.log(result.document)
-    // {
-    //   "errors": [{
-    //     "status": "500",
-    //     "detail": "An error occured."
-    //   }]
-    // }
-  }
-}
+console.log(result)
+// {
+//   isSuccess: true,
+//   document: {
+//     links: {
+//       self: "http://example.com/articles/1"
+//     },
+//     data: {
+//       type: "articles",
+//       id: "1",
+//       attributes: {
+//         title: "JSON:API paints my bikeshed!"
+//       },
+//       relationships: {
+//         author: {
+//           links: {
+//             related: "http://example.com/articles/1/author"
+//           }
+//         }
+//       }
+//     }
+//   },
+//   request: {
+//     url: 'http://examples.com/articles/1',
+//     headers: {
+//       Accept: 'application/vnd.api+json'
+//     },
+//     method: 'GET',
+//     body: null
+//   },
+//   response: {
+//     status: 200,
+//     body: '{"type":"articles","id":"1","attributes":{"title":"JSON:API paints my bikeshed!"},"relationships":{"author":{"links":{"related":"http://example.com/articles/1/author"}}}}',
+//     headers: {
+//       'content-type': 'application/vnd.api+json; charset=utf-8',
+//       etag: 'W/"47a7cbaefdec0639404a5946676f6e95"'
+//     }
+//   }
+// }
 ```
 
 #### Specification
