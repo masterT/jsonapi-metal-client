@@ -11,8 +11,19 @@ export class FetchHttpAdapter implements HttpAdapter.Adapter {
    */
   fetch: FetchFunction;
 
-  constructor(fetch: FetchFunction) {
+  /**
+   * The default request `init` options to apply on each request.
+   */
+  defaultInit?: RequestInit;
+
+  /**
+   * Create an fetch HTTP adapter.
+   * @param fetch - The {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API} function.
+   * @param defaultInit - The default request `init` options to apply on each request.
+   */
+  constructor(fetch: FetchFunction, defaultInit?: RequestInit) {
     this.fetch = fetch;
+    this.defaultInit = defaultInit;
   }
 
   /**
@@ -23,13 +34,27 @@ export class FetchHttpAdapter implements HttpAdapter.Adapter {
   async request(
     options: HttpAdapter.AdapterRequest
   ): Promise<HttpAdapter.AdapterResponse> {
-    const { url, method, headers, body } = options;
-    const response = await this.fetch(url, { method, headers, body });
+    const { url } = options;
+    const init = this.buildRequestInit(options);
+    const response = await this.fetch(url, init);
     return {
       status: response.status,
       body: await response.text(),
       headers: this.extractResponseHeaders(response)
     };
+  }
+
+  private buildRequestInit(options: HttpAdapter.AdapterRequest): RequestInit {
+    const { method, headers, body } = options;
+    let init: RequestInit = { method, headers, body };
+    if (this.defaultInit) {
+      init = { ...this.defaultInit, ...init };
+      // Merge headers.
+      if (this.defaultInit.headers) {
+        init.headers = { ...init.headers, ...this.defaultInit.headers };
+      }
+    }
+    return init;
   }
 
   private extractResponseHeaders(response: Response) {
