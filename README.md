@@ -1,5 +1,7 @@
 # JSON:API metal client
 
+[![Build](https://github.com/masterT/jsonapi-metal-client/actions/workflows/Build.yml/badge.svg)](https://github.com/masterT/jsonapi-metal-client/actions/workflows/Build.yml)
+
 Bare metal TypeScript and JavaScript client for web API implementing [JSON:API v1.0](https://jsonapi.org/).
 
 - Zero dependency
