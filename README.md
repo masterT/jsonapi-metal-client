@@ -182,6 +182,20 @@ const httpAdapter = new HttpAdapters.FetchHttpAdapter(
 );
 ```
 
+##### Set `defaultInit`
+
+Set a default request `init` options that will be merged with all the request options made by the adapter:
+
+```js
+const defaultInit = { mode: 'cors' };
+const httpAdapter = new HttpAdapters.FetchHttpAdapter(fetch, defaultInit);
+
+client.defaultInit.credentials = 'include';
+
+console.log(client.defaultInit);
+// { mode: 'cors', credentials: 'include' }
+```
+
 ### Client
 
 Set the HTTP adapter.
@@ -197,9 +211,7 @@ Set default HTTP headers to apply to each HTTP requests.
 ```ts
 const username = 'username';
 const password = 'password';
-const defaultHttpHeaders = {
-  'Authorization': 'Basic ' + btoa(username + ':' + password)
-};
+const defaultHttpHeaders = { 'Authorization': 'Basic ' + btoa(username + ':' + password) };
 
 const client = new JsonApi.Client(httpAdapter, defaultHttpHeaders);
 
