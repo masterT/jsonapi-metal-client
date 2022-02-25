@@ -259,6 +259,7 @@ export type ResourceObject = {
   attributes?: AttributesObject;
   relationships?: RelationshipsObject;
   links?: LinkObject;
+  meta?: MetaObject;
 };
 
 /**
