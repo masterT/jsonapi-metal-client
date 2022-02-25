@@ -365,7 +365,9 @@ export function isResourceObject(obj: any, _argumentName?: string): obj is Resou
         (typeof obj.attributes === "undefined" ||
             isAttributesObject(obj.attributes) as boolean) &&
         (typeof obj.relationships === "undefined" ||
-            isRelationshipsObject(obj.relationships) as boolean)
+            isRelationshipsObject(obj.relationships) as boolean) &&
+        (typeof obj.links === "undefined" ||
+            isLinkObject(obj.links) as boolean)
     )
 }
 

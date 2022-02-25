@@ -245,9 +245,12 @@ export type RelationshipsObject = {
  *           },
  *           "data": { "type": "people", "id": "9" }
  *         }
+ *       },
+ *       "links": {
+ *         "self": "http://example.com/articles/1"
  *       }
  *     }
- * @see {@link https://jsonapi.org/format/#document-links}
+ * @see {@link https://jsonapi.org/format/#document-resource-objects}
  * @see {@link isResourceObject} ts-auto-guard:type-guard
  */
 export type ResourceObject = {
@@ -255,6 +258,7 @@ export type ResourceObject = {
   type: string;
   attributes?: AttributesObject;
   relationships?: RelationshipsObject;
+  links?: LinkObject;
 };
 
 /**
