@@ -1,0 +1,196 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>jsonapi-metal-client</title><meta name="description" content="Documentation for jsonapi-metal-client"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">jsonapi-metal-client</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>jsonapi-metal-client</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#jsonapi-metal-client" id="jsonapi-metal-client" style="color: inherit; text-decoration: none;">
+  <h1>JSON:API metal client</h1>
+</a>
+<p><a href="https://github.com/masterT/jsonapi-metal-client/actions/workflows/Build.yml"><img src="https://github.com/masterT/jsonapi-metal-client/actions/workflows/Build.yml/badge.svg" alt="Build"></a>
+<a href="https://badge.fury.io/js/jsonapi-metal-client"><img src="https://badge.fury.io/js/jsonapi-metal-client.svg" alt="npm version"></a></p>
+<p>Bare metal TypeScript and JavaScript client for web API implementing <a href="https://jsonapi.org/">JSON:API v1.0</a>.</p>
+<ul>
+<li>Zero dependency</li>
+<li>Type-safe</li>
+<li>Isomorphic</li>
+</ul>
+<hr>
+
+<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+  <h2>Table of Contents</h2>
+</a>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#documentation">Documentation</a><ul>
+<li><a href="#http-adapter">HTTP adapter</a><ul>
+<li><a href="#using--fetch-">Using <code>fetch</code></a></li>
+</ul>
+</li>
+<li><a href="#client">Client</a><ul>
+<li><a href="#configure-custom-http-headers">Configure custom HTTP headers</a></li>
+<li><a href="#result">Result</a></li>
+<li><a href="#specification">Specification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#development">Development</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+
+<a href="#requirements" id="requirements" style="color: inherit; text-decoration: none;">
+  <h2>Requirements</h2>
+</a>
+<ul>
+<li>ES6 (ECMAScript 2015)</li>
+</ul>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<p>Using <em>npm</em>:</p>
+<pre><code class="language-shell"><span class="hl-0">npm install -s jsonapi-metal-client</span>
+</code></pre>
+<p>Using <em>yarn</em>:</p>
+<pre><code class="language-shell"><span class="hl-0">yarn add jsonapi-metal-client</span>
+</code></pre>
+<p>With ES6 modules:</p>
+<pre><code class="language-js"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">HttpAdapters</span><span class="hl-0">, </span><span class="hl-2">JsonApi</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;jsonapi-metal-client&#39;</span><span class="hl-0">;</span>
+</code></pre>
+<p>With CommonJS modules:</p>
+<pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> { </span><span class="hl-5">HttpAdapters</span><span class="hl-0">, </span><span class="hl-5">JsonApi</span><span class="hl-0"> } = </span><span class="hl-6">require</span><span class="hl-0">(</span><span class="hl-3">&#39;jsonapi-metal-client&#39;</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">httpAdapter</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-2">HttpAdapters</span><span class="hl-0">.</span><span class="hl-6">FetchHttpAdapter</span><span class="hl-0">(</span><span class="hl-2">window</span><span class="hl-0">.</span><span class="hl-2">fetch</span><span class="hl-0">.</span><span class="hl-6">bind</span><span class="hl-0">(</span><span class="hl-2">window</span><span class="hl-0">));</span><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">client</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-2">JsonApi</span><span class="hl-0">.</span><span class="hl-6">Client</span><span class="hl-0">(</span><span class="hl-2">httpAdapter</span><span class="hl-0">);</span><br/><br/><span class="hl-7">// Fetch a resource collection.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetch</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchResource</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchResourceCollection</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-7">// Fetch an individual resource.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetch</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchResource</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchResourceIndividual</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-7">// Fetch relationship data representing a to-one relationship.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetch</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1/relationships/author&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchRelationship</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1/relationships/author&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchRelationshipToOne</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1/relationships/author&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-7">// Fetch relationship data representing a to-many relationship.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetch</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1/relationships/comments&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchRelationship</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1/relationships/comments&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetchRelationshipToMany</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/articles/1/relationships/comments&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-7">// Create a resource.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">createResource</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-3">&#39;https://example.com/comments&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-2">type:</span><span class="hl-0"> </span><span class="hl-3">&#39;photos&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">      </span><span class="hl-2">attributes:</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">title:</span><span class="hl-0"> </span><span class="hl-3">&#39;Ember Hamster&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-2">src:</span><span class="hl-0"> </span><span class="hl-3">&#39;http://example.com/images/productivity.png&#39;</span><br/><span class="hl-0">      },</span><br/><span class="hl-0">      </span><span class="hl-2">relationships:</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">photographer:</span><span class="hl-0"> {</span><br/><span class="hl-0">          </span><span class="hl-2">data:</span><span class="hl-0"> { </span><span class="hl-2">type:</span><span class="hl-0"> </span><span class="hl-3">&#39;people&#39;</span><span class="hl-0">, </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;9&#39;</span><span class="hl-0"> }</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">);</span><br/><br/><span class="hl-7">// Update a resource.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">updateResource</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-3">&#39;https://example.com/articles/1&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-2">type:</span><span class="hl-0"> </span><span class="hl-3">&#39;articles&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">      </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;1&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">      </span><span class="hl-2">attributes:</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">title:</span><span class="hl-0"> </span><span class="hl-3">&#39;To TDD or Not&#39;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">);</span><br/><br/><span class="hl-7">// Delete a resource.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">deleteResource</span><span class="hl-0">(</span><span class="hl-3">&#39;https://example.com/photos/1&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-7">// Update a to-one relationship.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">updateRelationshipToOne</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-3">&#39;https://example.com/articles/1/relationships/author&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> { </span><span class="hl-2">type:</span><span class="hl-0"> </span><span class="hl-3">&#39;people&#39;</span><span class="hl-0">, </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;12&#39;</span><span class="hl-0"> }</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">);</span><br/><br/><span class="hl-7">// Add a member to a to-many relationship.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">createRelationshipToMany</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-3">&#39;https://example.com/articles/1/relationships/comments&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> [</span><br/><span class="hl-0">      { </span><span class="hl-2">type:</span><span class="hl-0"> </span><span class="hl-3">&#39;comments&#39;</span><span class="hl-0">, </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;123&#39;</span><span class="hl-0"> }</span><br/><span class="hl-0">    ]</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">);</span><br/><br/><span class="hl-7">// Replace all members of a to-many relationship.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">updateRelationshipToMany</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-3">&#39;https://example.com/articles/1/relationships/tags&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> []</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">);</span><br/><br/><span class="hl-7">// Remove members from a to-many relationship.</span><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">deleteRelationshipToMany</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-3">&#39;https://example.com/articles/1/relationships/comments&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> [</span><br/><span class="hl-0">      { </span><span class="hl-2">type:</span><span class="hl-0"> </span><span class="hl-3">&#39;comments&#39;</span><span class="hl-0">, </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;12&#39;</span><span class="hl-0"> },</span><br/><span class="hl-0">      { </span><span class="hl-2">type:</span><span class="hl-0"> </span><span class="hl-3">&#39;comments&#39;</span><span class="hl-0">, </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;13&#39;</span><span class="hl-0"> }</span><br/><span class="hl-0">    ]</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<ul>
+<li><a href="https://masterT.github.io/jsonapi-metal-client/typescript/">Typescript documentation</a></li>
+</ul>
+
+<a href="#http-adapter" id="http-adapter" style="color: inherit; text-decoration: none;">
+  <h3>HTTP adapter</h3>
+</a>
+
+<a href="#using-fetch" id="using-fetch" style="color: inherit; text-decoration: none;">
+  <h4>Using <code>fetch</code></h4>
+</a>
+<p>HTTP Adapter using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a>.</p>
+<pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">httpAdapter</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-2">HttpAdapters</span><span class="hl-0">.</span><span class="hl-6">FetchHttpAdapter</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-2">window</span><span class="hl-0">.</span><span class="hl-2">fetch</span><span class="hl-0">.</span><span class="hl-6">bind</span><span class="hl-0">(</span><span class="hl-2">window</span><span class="hl-0">)</span><br/><span class="hl-0">);</span>
+</code></pre>
+<p>For Node.js you can install <a href="https://www.npmjs.com/package/cross-fetch">cross-fetch</a>, or other implementations.</p>
+<pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">fetch</span><span class="hl-0"> = </span><span class="hl-6">require</span><span class="hl-0">(</span><span class="hl-3">&#39;cross-fetch&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">httpAdapter</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-2">HttpAdapters</span><span class="hl-0">.</span><span class="hl-6">FetchHttpAdapter</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-2">fetch</span><br/><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#set-defaultinit" id="set-defaultinit" style="color: inherit; text-decoration: none;">
+  <h5>Set <code>defaultInit</code></h5>
+</a>
+<p>Set a default request <code>init</code> options that will be merged with all the request options made by the adapter:</p>
+<pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">defaultInit</span><span class="hl-0"> = { </span><span class="hl-2">mode:</span><span class="hl-0"> </span><span class="hl-3">&#39;cors&#39;</span><span class="hl-0"> };</span><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">httpAdapter</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-2">HttpAdapters</span><span class="hl-0">.</span><span class="hl-6">FetchHttpAdapter</span><span class="hl-0">(</span><span class="hl-2">fetch</span><span class="hl-0">, </span><span class="hl-2">defaultInit</span><span class="hl-0">);</span><br/><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-2">defaultInit</span><span class="hl-0">.</span><span class="hl-2">credentials</span><span class="hl-0"> = </span><span class="hl-3">&#39;include&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-2">defaultInit</span><span class="hl-0">);</span><br/><span class="hl-7">// { mode: &#39;cors&#39;, credentials: &#39;include&#39; }</span>
+</code></pre>
+
+<a href="#client" id="client" style="color: inherit; text-decoration: none;">
+  <h3>Client</h3>
+</a>
+<p>Set the HTTP adapter.</p>
+<pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">client</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-2">JsonApi</span><span class="hl-0">.</span><span class="hl-6">Client</span><span class="hl-0">(</span><span class="hl-2">httpAdapter</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#configure-custom-http-headers" id="configure-custom-http-headers" style="color: inherit; text-decoration: none;">
+  <h4>Configure custom HTTP headers</h4>
+</a>
+<p>Set default HTTP headers to apply to each HTTP requests.</p>
+<pre><code class="language-ts"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">username</span><span class="hl-0"> = </span><span class="hl-3">&#39;username&#39;</span><span class="hl-0">;</span><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">password</span><span class="hl-0"> = </span><span class="hl-3">&#39;password&#39;</span><span class="hl-0">;</span><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">defaultHttpHeaders</span><span class="hl-0"> = { </span><span class="hl-3">&#39;Authorization&#39;</span><span class="hl-2">:</span><span class="hl-0"> </span><span class="hl-3">&#39;Basic &#39;</span><span class="hl-0"> + </span><span class="hl-6">btoa</span><span class="hl-0">(</span><span class="hl-2">username</span><span class="hl-0"> + </span><span class="hl-3">&#39;:&#39;</span><span class="hl-0"> + </span><span class="hl-2">password</span><span class="hl-0">) };</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">client</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-2">JsonApi</span><span class="hl-0">.</span><span class="hl-6">Client</span><span class="hl-0">(</span><span class="hl-2">httpAdapter</span><span class="hl-0">, </span><span class="hl-2">defaultHttpHeaders</span><span class="hl-0">);</span><br/><br/><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-2">defaultHttpHeaders</span><span class="hl-0">[</span><span class="hl-3">&#39;x-foo&#39;</span><span class="hl-0">] = </span><span class="hl-3">&#39;bar&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-2">defaultHttpHeaders</span><span class="hl-0">);</span><br/><span class="hl-7">// { Authorization: &#39;Basic dXNlcm5hbWU6cGFzc3dvcmQ=&#39;, &#39;x-foo&#39;: &#39;bar&#39; }</span>
+</code></pre>
+
+<a href="#result" id="result" style="color: inherit; text-decoration: none;">
+  <h4>Result</h4>
+</a>
+<p>The client returns a Promise that resolves with a <code>Result</code> for JSON:API operations with contains the properties:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>isSuccess</code></td>
+<td><em>boolean</em></td>
+<td>whether the operation is successful.</td>
+</tr>
+<tr>
+<td><code>document</code></td>
+<td><em>object</em></td>
+<td>JSON:API document.</td>
+</tr>
+<tr>
+<td><code>request</code></td>
+<td><em>object</em></td>
+<td>HTTP request representation.</td>
+</tr>
+<tr>
+<td><code>response</code></td>
+<td><em>object</em></td>
+<td>HTTP response representation.</td>
+</tr>
+</tbody></table>
+<pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">result</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetch</span><span class="hl-0">(</span><span class="hl-3">&#39;http://examples.com/articles/1&#39;</span><span class="hl-0">);</span><br/><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-2">result</span><span class="hl-0">)</span><br/><span class="hl-7">// {</span><br/><span class="hl-7">//   isSuccess: true,</span><br/><span class="hl-7">//   document: {</span><br/><span class="hl-7">//     links: {</span><br/><span class="hl-7">//       self: &quot;http://example.com/articles/1&quot;</span><br/><span class="hl-7">//     },</span><br/><span class="hl-7">//     data: {</span><br/><span class="hl-7">//       type: &quot;articles&quot;,</span><br/><span class="hl-7">//       id: &quot;1&quot;,</span><br/><span class="hl-7">//       attributes: {</span><br/><span class="hl-7">//         title: &quot;JSON:API paints my bikeshed!&quot;</span><br/><span class="hl-7">//       },</span><br/><span class="hl-7">//       relationships: {</span><br/><span class="hl-7">//         author: {</span><br/><span class="hl-7">//           links: {</span><br/><span class="hl-7">//             related: &quot;http://example.com/articles/1/author&quot;</span><br/><span class="hl-7">//           }</span><br/><span class="hl-7">//         }</span><br/><span class="hl-7">//       }</span><br/><span class="hl-7">//     }</span><br/><span class="hl-7">//   },</span><br/><span class="hl-7">//   request: {</span><br/><span class="hl-7">//     url: &#39;http://examples.com/articles/1&#39;,</span><br/><span class="hl-7">//     headers: {</span><br/><span class="hl-7">//       Accept: &#39;application/vnd.api+json&#39;</span><br/><span class="hl-7">//     },</span><br/><span class="hl-7">//     method: &#39;GET&#39;,</span><br/><span class="hl-7">//     body: null</span><br/><span class="hl-7">//   },</span><br/><span class="hl-7">//   response: {</span><br/><span class="hl-7">//     status: 200,</span><br/><span class="hl-7">//     body: &#39;{&quot;type&quot;:&quot;articles&quot;,&quot;id&quot;:&quot;1&quot;,&quot;attributes&quot;:{&quot;title&quot;:&quot;JSON:API paints my bikeshed!&quot;},&quot;relationships&quot;:{&quot;author&quot;:{&quot;links&quot;:{&quot;related&quot;:&quot;http://example.com/articles/1/author&quot;}}}}&#39;,</span><br/><span class="hl-7">//     headers: {</span><br/><span class="hl-7">//       &#39;content-type&#39;: &#39;application/vnd.api+json; charset=utf-8&#39;,</span><br/><span class="hl-7">//       etag: &#39;W/&quot;47a7cbaefdec0639404a5946676f6e95&quot;&#39;</span><br/><span class="hl-7">//     }</span><br/><span class="hl-7">//   }</span><br/><span class="hl-7">// }</span>
+</code></pre>
+
+<a href="#specification" id="specification" style="color: inherit; text-decoration: none;">
+  <h4>Specification</h4>
+</a>
+<p>There are some <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates">type guards (type predicats)</a> that can be used to inspect the kind of JSON:API document.</p>
+<pre><code class="language-js"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">JsonApi</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;jsonapi-metal-client&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-5">isFetchResponse</span><br/><span class="hl-0">  </span><span class="hl-5">isFetchResourceResponse</span><br/><span class="hl-0">  </span><span class="hl-5">isFetchResourceIndividualResponse</span><br/><span class="hl-0">  </span><span class="hl-5">isErrorDocument</span><br/><span class="hl-0">} = </span><span class="hl-2">JsonApi</span><span class="hl-0">.</span><span class="hl-2">Specification</span><span class="hl-0">.</span><span class="hl-2">TypeGuards</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">result</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">client</span><span class="hl-0">.</span><span class="hl-6">fetch</span><span class="hl-0">(</span><span class="hl-3">&#39;http://examples.com/articles/1&#39;</span><span class="hl-0">);</span><br/><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">result</span><span class="hl-0">.</span><span class="hl-2">isSuccess</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-6">isFetchResponse</span><span class="hl-0">(</span><span class="hl-2">result</span><span class="hl-0">.</span><span class="hl-2">document</span><span class="hl-0">)</span><br/><span class="hl-0">  </span><span class="hl-6">isFetchResourceResponse</span><span class="hl-0">(</span><span class="hl-2">result</span><span class="hl-0">.</span><span class="hl-2">document</span><span class="hl-0">)</span><br/><span class="hl-0">  </span><span class="hl-6">isFetchResourceIndividualResponse</span><span class="hl-0">(</span><span class="hl-2">result</span><span class="hl-0">.</span><span class="hl-2">document</span><span class="hl-0">)</span><br/><span class="hl-0">  </span><span class="hl-7">// true</span><br/><span class="hl-0">} </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">result</span><span class="hl-0">.</span><span class="hl-2">document</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-6">isErrorDocument</span><span class="hl-0">(</span><span class="hl-2">result</span><span class="hl-0">.</span><span class="hl-2">document</span><span class="hl-0">)</span><br/><span class="hl-0">    </span><span class="hl-7">// true</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+  <h2>Development</h2>
+</a>
+<p>Requirements:</p>
+<ul>
+<li>Yarn</li>
+</ul>
+
+<a href="#type-guards" id="type-guards" style="color: inherit; text-decoration: none;">
+  <h3>Type Guards</h3>
+</a>
+<p>Generate <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates">type guards (type predicats)</a>.</p>
+<pre><code class="language-shell"><span class="hl-0">yarn type-guards</span>
+</code></pre>
+
+<a href="#documentation-1" id="documentation-1" style="color: inherit; text-decoration: none;">
+  <h3>Documentation</h3>
+</a>
+<p>Generate documentation using <a href="https://typedoc.org/">TypeDoc</a>:</p>
+<pre><code class="language-shell"><span class="hl-0">yarn documentation</span>
+</code></pre>
+
+<a href="#lint" id="lint" style="color: inherit; text-decoration: none;">
+  <h3>Lint</h3>
+</a>
+<p>Executing lint check using <a href="https://eslint.org/">ESLint</a>:</p>
+<pre><code class="language-shell"><span class="hl-0">yarn lint</span>
+</code></pre>
+<p>Executing lint fix using <a href="https://eslint.org/">ESLint</a>:</p>
+<pre><code class="language-shell"><span class="hl-0">yarn format</span>
+</code></pre>
+
+<a href="#test" id="test" style="color: inherit; text-decoration: none;">
+  <h3>Test</h3>
+</a>
+<p>Executing <a href="https://jestjs.io/">Jest</a> test suite:</p>
+<pre><code class="language-shell"><span class="hl-0">yarn </span><span class="hl-6">test</span>
+</code></pre>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p><a href="./LICENSE">MIT</a></p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="modules/HttpAdapter.html">Http<wbr/>Adapter</a></li><li class=" tsd-kind-namespace"><a href="modules/HttpAdapters.html">Http<wbr/>Adapters</a></li><li class=" tsd-kind-namespace"><a href="modules/JsonApi.html">Json<wbr/>Api</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
