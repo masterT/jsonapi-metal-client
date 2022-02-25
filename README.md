@@ -1,6 +1,7 @@
 # JSON:API metal client
 
 [![Build](https://github.com/masterT/jsonapi-metal-client/actions/workflows/Build.yml/badge.svg)](https://github.com/masterT/jsonapi-metal-client/actions/workflows/Build.yml)
+[![npm version](https://badge.fury.io/js/jsonapi-metal-client.svg)](https://badge.fury.io/js/jsonapi-metal-client)
 
 Bare metal TypeScript and JavaScript client for web API implementing [JSON:API v1.0](https://jsonapi.org/).
 
