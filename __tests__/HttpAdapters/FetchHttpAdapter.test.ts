@@ -56,4 +56,51 @@ describe.only('HttpAdapters.FetchHttpAdapter', () => {
       });
     });
   });
+
+  describe('with defaultInit', () => {
+    describe('with headers', () => {
+      beforeEach(() => {
+        httpAdapter.defaultInit = {
+          method: 'PATCH',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'x-foo': 'bar',
+            'x-csrf-token': ''
+          },
+          body: '[]'
+        };
+      });
+
+      test('calls fetch function with merged init', () => {
+        httpAdapter.request(request);
+
+        expect(fetchFunction.mock.calls.length).toBe(1);
+        expect(fetchFunction.mock.calls[0]).toEqual([
+          'https://examples.com/',
+          {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-csrf-token': '',
+              'x-foo': 'bar'
+            },
+            body: '{"foo":"bar"}'
+          }
+        ]);
+      });
+
+      test('resolves with response', async () => {
+        await expect(httpAdapter.request(request)).resolves.toEqual({
+          body: '<!DOCTYPE html>',
+          headers: {
+            'content-type': 'text/html'
+          },
+          status: 200
+        });
+      });
+    });
+  });
 });
