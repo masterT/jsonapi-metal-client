@@ -9,6 +9,9 @@ Bare metal TypeScript and JavaScript client for web API implementing [JSON:API v
 - Type-safe
 - Isomorphic
 
+Documentations
+- [Typescript documentation](https://masterT.github.io/jsonapi-metal-client/typescript/)
+
 ---
 
 ## Table of Contents
@@ -18,7 +21,8 @@ Bare metal TypeScript and JavaScript client for web API implementing [JSON:API v
 * [Usage](#usage)
 * [Documentation](#documentation)
   + [HTTP adapter](#http-adapter)
-    - [Using `fetch`](#using--fetch-)
+    - [Using `fetch`](#using-fetch)
+    - [Using `axios`](#using-axios)
   + [Client](#client)
     - [Configure custom HTTP headers](#configure-custom-http-headers)
     - [Result](#result)
@@ -161,6 +165,30 @@ client.deleteRelationshipToMany(
 - [Typescript documentation](https://masterT.github.io/jsonapi-metal-client/typescript/)
 
 ### HTTP adapter
+
+#### Using `axios`
+
+HTTP Adapter using the [axios](://github.com/axios/axios).
+
+```js
+import axios from 'axios'
+
+const httpAdapter = new HttpAdapters.AxiosHttpAdapter(
+  axios
+);
+```
+
+Using custom instance:
+
+```js
+import axios from 'axios'
+
+const instance = axios.create({ /* ... */ });
+
+const httpAdapter = new HttpAdapters.AxiosHttpAdapter(
+  instance
+);
+```
 
 #### Using `fetch`
 

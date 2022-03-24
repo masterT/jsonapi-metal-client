@@ -2,7 +2,7 @@ import type { AxiosInstance } from 'axios';
 import * as HttpAdapter from '../HttpAdapter';
 
 /**
- * {@link HttpAdapter.Adapter} using {@link https://github.com/axios/axios|Axios} for make HTTP requests.
+ * {@link HttpAdapter.Adapter} using {@link https://github.com/axios/axios|axios} for make HTTP requests.
  */
 export class AxiosHttpAdapter implements HttpAdapter.Adapter {
   /**
@@ -11,12 +11,7 @@ export class AxiosHttpAdapter implements HttpAdapter.Adapter {
   instance: AxiosInstance;
 
   /**
-   * The default request `init` options to apply on each request.
-   */
-  defaultInit?: RequestInit;
-
-  /**
-   * Create an fetch HTTP adapter.
+   * Create an axios HTTP adapter.
    * @param instance - The Axios instance.
    */
   constructor(instance: AxiosInstance) {
