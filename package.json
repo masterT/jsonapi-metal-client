@@ -1,6 +1,6 @@
 {
   "name": "jsonapi-metal-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Bare metal TypeScript and JavaScript client for web API implementing JSON:API v1.0.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
