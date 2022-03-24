@@ -24,7 +24,16 @@ export function isAdapterRequest(obj: any, _argumentName?: string): obj is Adapt
             typeof obj === "object" ||
             typeof obj === "function") &&
         typeof obj.url === "string" &&
-        typeof obj.method === "string" &&
+        (obj.method === "GET" ||
+            obj.method === "DELETE" ||
+            obj.method === "HEAD" ||
+            obj.method === "OPTIONS" ||
+            obj.method === "POST" ||
+            obj.method === "PUT" ||
+            obj.method === "PATCH" ||
+            obj.method === "PURGE" ||
+            obj.method === "LINK" ||
+            obj.method === "UNLINK") &&
         (typeof obj.headers === "undefined" ||
             (obj.headers !== null &&
                 typeof obj.headers === "object" ||
