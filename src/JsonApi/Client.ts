@@ -541,7 +541,7 @@ export class Client {
 
   private async requestUpdateRelationshipToMany(
     url: string,
-    method: string,
+    method: HttpAdapter.AdapterRequestMethod,
     document: any
   ): Promise<Result<Specification.UpdateRelationshipToManyResponse>> {
     try {

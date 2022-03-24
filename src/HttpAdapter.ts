@@ -7,10 +7,22 @@ export interface AdapterResponse {
   body?: string;
 }
 
+export type AdapterRequestMethod =
+  | 'GET'
+  | 'DELETE'
+  | 'HEAD'
+  | 'OPTIONS'
+  | 'POST'
+  | 'PUT'
+  | 'PATCH'
+  | 'PURGE'
+  | 'LINK'
+  | 'UNLINK';
+
 /** @see {@link isAdapterRequest} ts-auto-guard:type-guard */
 export interface AdapterRequest {
   url: string;
-  method: string;
+  method: AdapterRequestMethod;
   headers?: { [key: string]: string };
   body: string | null;
 }
